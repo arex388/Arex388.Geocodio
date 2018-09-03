@@ -10,7 +10,7 @@
     <Description>Geocod.io API Implementation in C#</Description>
     <PackageProjectUrl>https://github.com/arex388/Arex388.Geocodio</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arex388/Arex388.Geocodio</RepositoryUrl>
-    <PackageTags>geocodio geocod.io</PackageTags>
+    <PackageTags>geocodio geocod.io arex388</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
