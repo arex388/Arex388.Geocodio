@@ -1,4 +1,4 @@
-﻿namespace Arex388.Geocodio.Models {
+﻿namespace Arex388.Geocodio {
 	public static class AccuracyType {
 		/// <summary>
 		/// Closest city/town/place
