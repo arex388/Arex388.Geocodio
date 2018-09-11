@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -7,14 +8,16 @@ using Newtonsoft.Json;
 
 namespace Arex388.Geocodio {
 	public sealed class GeocodioClient {
+		private const int MaxBatchCount = 10000;
+
 		private HttpClient Client { get; }
 		private string Key { get; }
 
 		public GeocodioClient(
 			HttpClient client,
 			string key) {
-			Client = client;
-			Key = key;
+			Client = client ?? throw new ArgumentNullException(nameof(client));
+			Key = key ?? throw new ArgumentNullException(nameof(key));
 		}
 
 		public async Task<GeocodeResponse> GetGeocodeAsync(
@@ -48,9 +51,12 @@ namespace Arex388.Geocodio {
 
 		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
 			GeocodeBatchRequest request) {
-			if (request == null
-				|| request.Addresses.Count() > 10000) {
+			if (request == null) {
 				return null;
+			}
+
+			if (request.Addresses.Count() > MaxBatchCount) {
+				throw new InvalidOperationException($"You're attempting to batch geocode {request.Addresses.Count()} addresses, which is more than the permitted limit of {MaxBatchCount}");
 			}
 
 			var response = await GetResponseAsync(request);
@@ -93,6 +99,10 @@ namespace Arex388.Geocodio {
 			ReverseGeocodeBatchRequest request) {
 			if (request == null) {
 				return null;
+			}
+
+			if (request.Coordinates.Count() > MaxBatchCount) {
+				throw new InvalidOperationException($"You're attempting to batch reverse geocode {request.Coordinates.Count()} coordinates, which is more than the permitted limit of {MaxBatchCount}.");
 			}
 
 			var response = await GetResponseAsync(request);
