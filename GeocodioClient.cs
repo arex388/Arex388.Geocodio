@@ -116,7 +116,9 @@ namespace Arex388.Geocodio {
 
 			try {
 				if (request.Method == HttpMethod.Get) {
-					return await Client.GetStringAsync(endpoint);
+					var response = await Client.GetAsync(endpoint);
+
+					return await response.Content.ReadAsStringAsync();
 				}
 
 				using (var content = new StringContent(request.Body, Encoding.UTF8, "application/json")) {
