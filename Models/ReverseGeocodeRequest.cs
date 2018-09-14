@@ -7,7 +7,7 @@ namespace Arex388.Geocodio {
 		public override string Endpoint {
 			get {
 				var parameters = new HashSet<string> {
-					$"q={Latitude},{Longitude}"
+					$"q={Location}"
 				};
 
 				if (Fields.Any()) {
@@ -22,7 +22,6 @@ namespace Arex388.Geocodio {
 			}
 		}
 		public IEnumerable<string> Fields { get; set; } = Enumerable.Empty<string>();
-		public decimal Latitude { get; set; }
-		public decimal Longitude { get; set; }
+		public string Location {get;set;}
 	}
 }

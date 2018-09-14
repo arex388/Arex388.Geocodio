@@ -65,13 +65,11 @@ namespace Arex388.Geocodio {
 		}
 
 		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
-			decimal latitude,
-			decimal longitude,
+			string location,
 			params string[] fields) {
 			return await GetReverseGeocodeAsync(new ReverseGeocodeRequest {
 				Fields = fields,
-				Latitude = latitude,
-				Longitude = longitude
+				Location = location
 			});
 		}
 
