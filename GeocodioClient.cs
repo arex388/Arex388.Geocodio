@@ -31,7 +31,7 @@ namespace Arex388.Geocodio {
 
 		public async Task<GeocodeResponse> GetGeocodeAsync(
 			GeocodeRequest request) {
-			if (request == null) {
+			if (request is null) {
 				return null;
 			}
 
@@ -51,7 +51,7 @@ namespace Arex388.Geocodio {
 
 		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
 			GeocodeBatchRequest request) {
-			if (request == null) {
+			if (request is null) {
 				return null;
 			}
 
@@ -75,7 +75,7 @@ namespace Arex388.Geocodio {
 
 		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
 			ReverseGeocodeRequest request) {
-			if (request == null) {
+			if (request is null) {
 				return null;
 			}
 
@@ -95,7 +95,7 @@ namespace Arex388.Geocodio {
 
 		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
 			ReverseGeocodeBatchRequest request) {
-			if (request == null) {
+			if (request is null) {
 				return null;
 			}
 
