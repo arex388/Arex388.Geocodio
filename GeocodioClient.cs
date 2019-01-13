@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 
 namespace Arex388.Geocodio {
 	public sealed class GeocodioClient {
+		//	https://www.geocod.io/docs/#fields
+
 		private const int MaxBatchCount = 10000;
 
 		private HttpClient Client { get; }
@@ -41,7 +43,7 @@ namespace Arex388.Geocodio {
 		}
 
 		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
-			IEnumerable<string> addresses,
+			IList<string> addresses,
 			params string[] fields) {
 			return await GetGeocodeBatchAsync(new GeocodeBatchRequest {
 				Addresses = addresses,
@@ -85,7 +87,7 @@ namespace Arex388.Geocodio {
 		}
 
 		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
-			IEnumerable<string> coordinates,
+			IList<string> coordinates,
 			params string[] fields) {
 			return await GetReverseGeocodeBatchAsync(new ReverseGeocodeBatchRequest {
 				Coordinates = coordinates,

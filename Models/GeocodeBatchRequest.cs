@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Arex388.Geocodio {
 	public sealed class GeocodeBatchRequest :
 		RequestBase {
-		public IEnumerable<string> Addresses { get; set; }
+		public IList<string> Addresses { get; set; }
 		public override string Body => JsonConvert.SerializeObject(Addresses);
 		public override string Endpoint {
 			get {
@@ -23,7 +23,7 @@ namespace Arex388.Geocodio {
 				return $"{EndpointRoot}/geocode?{query}";
 			}
 		}
-		public IEnumerable<string> Fields { get; set; } = Enumerable.Empty<string>();
+		public IList<string> Fields { get; set; } = new List<string>();
 		public override HttpMethod Method => HttpMethod.Post;
 	}
 }

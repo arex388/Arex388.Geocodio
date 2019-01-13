@@ -23,6 +23,6 @@ namespace Arex388.Geocodio {
 				return $"{EndpointRoot}/geocode?{query}";
 			}
 		}
-		public IEnumerable<string> Fields { get; set; } = Enumerable.Empty<string>();
+		public IList<string> Fields { get; set; } = new List<string>();
 	}
 }

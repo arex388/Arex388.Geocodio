@@ -7,6 +7,8 @@ namespace Arex388.Geocodio {
 		[JsonProperty("accuracy_type")]
 		public string AccuracyType { get; set; }
 
+		public Fields Fields { get; set; }
+
 		[JsonProperty("formatted_address")]
 		public string FormattedAddress { get; set; }
 

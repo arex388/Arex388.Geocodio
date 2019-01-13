@@ -1,9 +1,20 @@
-﻿namespace Arex388.Geocodio {
-	public static class Fields {
-		public const string CongessionalDistrict = "cd";
-		public const string StateLegislativeDistrict = "stateleg";
-		public const string SchoolDistrict = "school";
-		public const string Census = "census";
-		public const string Timezone = "timezone";
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+
+namespace Arex388.Geocodio {
+	public sealed class Fields {
+		public Acs Acs { get; set; }
+		public Census Census { get; set; }
+
+		[JsonProperty("congressional_districts")]
+		public IList<CongressionalDistrict> CongressionalDistricts { get; set; }
+
+		[JsonProperty("school_districts")]
+		public SchoolDistricts SchoolDistricts { get; set; }
+
+		[JsonProperty("state_legislative_districts")]
+		public StateDistricts StateDistricts { get; set; }
+
+		public TimeZone TimeZone { get; set; }
 	}
 }

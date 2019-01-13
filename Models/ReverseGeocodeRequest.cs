@@ -21,7 +21,7 @@ namespace Arex388.Geocodio {
 				return $"{EndpointRoot}/reverse?{query}";
 			}
 		}
-		public IEnumerable<string> Fields { get; set; } = Enumerable.Empty<string>();
+		public IList<string> Fields { get; set; } = new List<string>();
 		public string Location {get;set;}
 	}
 }

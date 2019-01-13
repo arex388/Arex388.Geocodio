@@ -5,6 +5,10 @@ To use, create a new instance of `GeocodioClient` and pass in an instance of `Ht
 
 Available as a NuGet package [here][2].
 
+**Update 1.1.0**
+
+Now includes full support for all fields and their responses.
+
     var geocodio = new GeocodioClient(httpClient, "{key}");
 
 **Get Geocode**
