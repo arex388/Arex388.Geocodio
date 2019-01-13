@@ -15,6 +15,17 @@ namespace Arex388.Geocodio {
 		[JsonProperty("current_legislators")]
 		public IList<CongressLegislator> Legislators { get; set; }
 
+		/// <summary>
+		///	current_legislator was renamed to current_legislators (plural)
+		/// and changed to a collection in v1.2.
+		/// </summary>
+		[JsonProperty("current_legislator")]
+		private CongressLegislator Legislator {
+			set => Legislators = new List<CongressLegislator> {
+				value
+			};
+		}
+
 		public string Name { get; set; }
 		public int Proportion { get; set; }
 	}

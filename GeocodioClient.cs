@@ -8,18 +8,19 @@ using Newtonsoft.Json;
 
 namespace Arex388.Geocodio {
 	public sealed class GeocodioClient {
-		//	https://www.geocod.io/docs/#fields
-
 		private const int MaxBatchCount = 10000;
 
 		private HttpClient Client { get; }
 		private string Key { get; }
+		private string EndpointVersion { get; }
 
 		public GeocodioClient(
 			HttpClient client,
-			string key) {
+			string key,
+			string endpointVersion = EndpointVersions.V13) {
 			Client = client ?? throw new ArgumentNullException(nameof(client));
 			Key = key ?? throw new ArgumentNullException(nameof(key));
+			EndpointVersion = endpointVersion ?? throw new ArgumentNullException(nameof(endpointVersion));
 		}
 
 		public async Task<GeocodeResponse> GetGeocodeAsync(
@@ -112,7 +113,7 @@ namespace Arex388.Geocodio {
 
 		private async Task<string> GetResponseAsync(
 			RequestBase request) {
-			var endpoint = $"{request.Endpoint}&api_key={Key}";
+			var endpoint = $"https://api.geocod.io/{EndpointVersion}/{request.Endpoint}&api_key={Key}";
 
 			try {
 				if (request.Method == HttpMethod.Get) {

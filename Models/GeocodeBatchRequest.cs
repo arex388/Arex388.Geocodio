@@ -20,7 +20,7 @@ namespace Arex388.Geocodio {
 
 				var query = string.Join("&", parameters);
 
-				return $"{EndpointRoot}/geocode?{query}";
+				return $"geocode?{query}";
 			}
 		}
 		public IList<string> Fields { get; set; } = new List<string>();
