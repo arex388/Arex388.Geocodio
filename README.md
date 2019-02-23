@@ -14,7 +14,9 @@ Available as a NuGet package [here][2].
 
 **Get Geocode**
 
-    var geocode = await geocodio.GetGeocodeAsync("1600 Pennsylvania Ave NW, Washington, DC 20500");
+    var geocode = await geocodio.GetGeocodeAsync(
+        "1600 Pennsylvania Ave NW, Washington, DC 20500"
+    );
 
 **Get Geocode Batch**
 
@@ -25,7 +27,9 @@ Available as a NuGet package [here][2].
 
 **Get Reverse Geocode**
 
-    var reverse = await geocodio.GetReverseGeocodeAsync("38.897675,-77.036547");
+    var reverse = await geocodio.GetReverseGeocodeAsync(
+        "38.897675,-77.036547"
+    );
 
 **Get Reverse Geocode Batch**
 
