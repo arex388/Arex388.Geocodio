@@ -49,7 +49,7 @@ To request fields in the response there is a helper `FieldTypes` class which con
 
 **Update 1.2.1 (2019-03-13)**
 
-Fixed a small type on batch geocoding where the requested fields were not returned.
+Fixed a small typeo on batch geocoding where the requested fields were not returned.
 
 **Update 1.2.0 (2019-01-13)**
 
