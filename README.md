@@ -38,11 +38,24 @@ Available as a NuGet package [here][2].
 		"38.898976,-77.038219"
 	});
 
-**Update 1.2.0 (2018-01-13)**
+**Fields**
+
+To request fields in the response there is a helper `FieldTypes` class which contains the strings of all available fields.
+
+    var geocode = await geocodio.GetGeocodeAsync(
+        "1600 Pennsylvania Ave NW, Washington, DC 20500",
+        FieldTypes.Census
+    );
+
+**Update 1.2.1 (2019-03-13)**
+
+Fixed a small type on batch geocoding where the requested fields were not returned.
+
+**Update 1.2.0 (2019-01-13)**
 
 Now includes backwards compatibility. In the `GeocodioClient` constructor you can now pass a third argument for the endpoint version using `EndpointVersions` constants.
 
-**Update 1.1.0 (2018-01-13)**
+**Update 1.1.0 (2019-01-13)**
 
 Now includes full support for all fields and their responses.
 

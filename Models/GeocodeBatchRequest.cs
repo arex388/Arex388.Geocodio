@@ -15,7 +15,7 @@ namespace Arex388.Geocodio {
 				if (Fields.Any()) {
 					var fields = string.Join(",", Fields);
 
-					parameters.Add($"field={fields}");
+					parameters.Add($"fields={fields}");
 				}
 
 				var query = string.Join("&", parameters);
