@@ -47,6 +47,10 @@ To request fields in the response there is a helper `FieldTypes` class which con
         FieldTypes.Census
     );
 
+**Update 1.2.2 (2019-04-27)**
+
+Minor update to add the Metropolitan Divisions to the Census response.
+
 **Update 1.2.1 (2019-03-13)**
 
 Fixed a small typo on batch geocoding where the requested fields were not returned.
