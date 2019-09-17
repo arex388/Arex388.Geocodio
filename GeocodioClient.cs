@@ -94,7 +94,7 @@ namespace Arex388.Geocodio {
 				return null;
 			}
 
-			if (request.Coordinates.Count() > MaxBatchCount) {
+			if (request.Coordinates.Count > MaxBatchCount) {
 				throw new InvalidOperationException($"You're attempting to batch reverse geocode {request.Coordinates.Count()} coordinates, which is more than the permitted limit of {MaxBatchCount}.");
 			}
 
