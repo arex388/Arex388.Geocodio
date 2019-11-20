@@ -17,7 +17,7 @@ namespace Arex388.Geocodio {
 		public GeocodioClient(
 			HttpClient client,
 			string key,
-			string endpointVersion = EndpointVersions.V13) {
+			string endpointVersion = EndpointVersions.V14) {
 			Client = client ?? throw new ArgumentNullException(nameof(client));
 			Key = key ?? throw new ArgumentNullException(nameof(key));
 			EndpointVersion = endpointVersion ?? throw new ArgumentNullException(nameof(endpointVersion));
