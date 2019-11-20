@@ -19,5 +19,10 @@
 		/// v1.3
 		/// </summary>
 		public const string V13 = "v1.3";
+		
+		/// <summary>
+		/// v1.4
+		/// </summary>
+		public const string V14 = "v1.4";
 	}
 }
