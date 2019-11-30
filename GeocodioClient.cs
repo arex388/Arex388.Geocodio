@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Arex388.Geocodio {
 	public sealed class GeocodioClient {
@@ -17,7 +17,7 @@ namespace Arex388.Geocodio {
 		public GeocodioClient(
 			HttpClient client,
 			string key,
-			string endpointVersion = EndpointVersions.V13) {
+			string endpointVersion = EndpointVersions.V1_3) {
 			Client = client ?? throw new ArgumentNullException(nameof(client));
 			Key = key ?? throw new ArgumentNullException(nameof(key));
 			EndpointVersion = endpointVersion ?? throw new ArgumentNullException(nameof(endpointVersion));
@@ -26,9 +26,9 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeResponse> GetGeocodeAsync(
 			string address,
 			params string[] fields) => await GetGeocodeAsync(new GeocodeRequest {
-			Address = address,
-			Fields = fields
-		});
+				Address = address,
+				Fields = fields
+			});
 
 		public async Task<GeocodeResponse> GetGeocodeAsync(
 			GeocodeRequest request) {
@@ -44,9 +44,9 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
 			IList<string> addresses,
 			params string[] fields) => await GetGeocodeBatchAsync(new GeocodeBatchRequest {
-			Addresses = addresses,
-			Fields = fields
-		});
+				Addresses = addresses,
+				Fields = fields
+			});
 
 		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
 			GeocodeBatchRequest request) {
@@ -66,9 +66,9 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
 			string location,
 			params string[] fields) => await GetReverseGeocodeAsync(new ReverseGeocodeRequest {
-			Fields = fields,
-			Location = location
-		});
+				Fields = fields,
+				Location = location
+			});
 
 		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
 			ReverseGeocodeRequest request) {
@@ -84,9 +84,9 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
 			IList<string> coordinates,
 			params string[] fields) => await GetReverseGeocodeBatchAsync(new ReverseGeocodeBatchRequest {
-			Coordinates = coordinates,
-			Fields = fields
-		});
+				Coordinates = coordinates,
+				Fields = fields
+			});
 
 		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
 			ReverseGeocodeBatchRequest request) {

@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/arex388/Arex388.Geocodio</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arex388/Arex388.Geocodio</RepositoryUrl>
     <PackageTags>geocodio geocod.io arex388</PackageTags>
-    <Version>1.2.2</Version>
+    <Version>1.2.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

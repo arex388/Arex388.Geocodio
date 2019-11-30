@@ -21,9 +21,9 @@ Available as a NuGet package [here][2].
 **Get Geocode Batch**
 
     var geocodeBatch = await geocodio.GetGeocodeBatchAsync(new[] {
-		"1600 Pennsylvania Ave NW, Washington, DC 20500",
-		"East Capitol St NE & First St SE, Washington, DC 20004"
-	});
+    	"1600 Pennsylvania Ave NW, Washington, DC 20500",
+    	"East Capitol St NE & First St SE, Washington, DC 20004"
+    });
 
 **Get Reverse Geocode**
 
@@ -34,9 +34,9 @@ Available as a NuGet package [here][2].
 **Get Reverse Geocode Batch**
 
     var reverseBatch = await geocodio.GetReverseGeocodeBatchAsync(new[] {
-		"38.897675,-77.036547",
-		"38.898976,-77.038219"
-	});
+    	"38.897675,-77.036547",
+    	"38.898976,-77.038219"
+    });
 
 **Fields**
 
@@ -46,6 +46,10 @@ To request fields in the response there is a helper `FieldTypes` class which con
         "1600 Pennsylvania Ave NW, Washington, DC 20500",
         FieldTypes.Census
     );
+
+**Update 1.2.3 (2019-11-30)**
+
+Added a `UtcOffsetNormalized` helper property to `TimeZone`. Exploring upgrading to v1.4, but the JSON response is difficult to deserialize.
 
 **Update 1.2.2 (2019-04-27)**
 
