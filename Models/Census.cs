@@ -35,11 +35,8 @@ namespace Arex388.Geocodio {
 		[JsonProperty("metropolitan_division")]
 		public CensusArea MetropolitanDivisions { get; set; }
 
-		/// <summary>
-		/// The 7-digit place FIPS code. A place is defined as a city or other census designated area. A full list of ANSI codes is available from the U.S. Census Bureau
-		/// </summary>
-		[JsonProperty("place_fips")]
-		public string PlaceFipsCode { get; set; }
+		public CensusPlace Place { get; set; }
+		public string Source { get; set; }
 
 		/// <summary>
 		/// The two-digit state FIPS code. A full list is available on Wikipedia

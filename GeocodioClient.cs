@@ -10,17 +10,14 @@ namespace Arex388.Geocodio {
 	public sealed class GeocodioClient {
 		private const int MaxBatchCount = 10000;
 
-		private HttpClient Client { get; }
+		private HttpClient HttpClient { get; }
 		private string Key { get; }
-		private string EndpointVersion { get; }
 
 		public GeocodioClient(
-			HttpClient client,
-			string key,
-			string endpointVersion = EndpointVersions.V1_3) {
-			Client = client ?? throw new ArgumentNullException(nameof(client));
+			HttpClient httpClient,
+			string key) {
+			HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 			Key = key ?? throw new ArgumentNullException(nameof(key));
-			EndpointVersion = endpointVersion ?? throw new ArgumentNullException(nameof(endpointVersion));
 		}
 
 		public async Task<GeocodeResponse> GetGeocodeAsync(
@@ -33,7 +30,9 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeResponse> GetGeocodeAsync(
 			GeocodeRequest request) {
 			if (request is null) {
-				return null;
+				return new GeocodeResponse {
+					Error = "The request is null."
+				};
 			}
 
 			var response = await GetResponseAsync(request);
@@ -51,11 +50,13 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
 			GeocodeBatchRequest request) {
 			if (request is null) {
-				return null;
+				return new GeocodeBatchResponse {
+					Error = "The request is null."
+				};
 			}
 
 			if (request.Addresses.Count() > MaxBatchCount) {
-				throw new InvalidOperationException($"You're attempting to batch geocode {request.Addresses.Count()} addresses, which is more than the permitted limit of {MaxBatchCount}");
+				throw new InvalidOperationException($"You're attempting to batch geocode {request.Addresses.Count()} addresses, which is more than the permitted limit of {MaxBatchCount}.");
 			}
 
 			var response = await GetResponseAsync(request);
@@ -73,7 +74,9 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
 			ReverseGeocodeRequest request) {
 			if (request is null) {
-				return null;
+				return new GeocodeResponse {
+					Error = "The request is null."
+				};
 			}
 
 			var response = await GetResponseAsync(request);
@@ -91,7 +94,9 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
 			ReverseGeocodeBatchRequest request) {
 			if (request is null) {
-				return null;
+				return new GeocodeBatchResponse {
+					Error = "The request is null."
+				};
 			}
 
 			if (request.Coordinates.Count > MaxBatchCount) {
@@ -105,23 +110,48 @@ namespace Arex388.Geocodio {
 
 		private async Task<string> GetResponseAsync(
 			RequestBase request) {
-			var endpoint = $"https://api.geocod.io/{EndpointVersion}/{request.Endpoint}&api_key={Key}";
+			var endpoint = $"https://api.geocod.io/v1.4/{request.Endpoint}&api_key={Key}";
 
 			try {
 				if (request.Method == HttpMethod.Get) {
-					var response = await Client.GetAsync(endpoint);
-
-					return await response.Content.ReadAsStringAsync();
+					return await GetGetResponseAsync(request, endpoint);
 				}
 
-				using (var content = new StringContent(request.Body, Encoding.UTF8, "application/json")) {
-					using (var message = await Client.PostAsync(endpoint, content)) {
-						return await message.Content.ReadAsStringAsync();
-					}
-				}
+				return await GetPostResponseAsync(request, endpoint);
 			} catch (HttpRequestException) {
 				return null;
 			}
+		}
+
+		private async Task<string> GetGetResponseAsync(
+			RequestBase request,
+			string endpoint) {
+			var response = await HttpClient.GetAsync(endpoint);
+
+#if DEBUG
+			var responseContent = await response.Content.ReadAsStringAsync();
+
+			Console.WriteLine(responseContent);
+
+			return responseContent;
+#else
+			return await response.Content.ReadAsStringAsync();
+#endif
+		}
+
+		private async Task<string> GetPostResponseAsync(
+			RequestBase request,
+			string endpoint) {
+			using var content = new StringContent(request.Body, Encoding.UTF8, "application/json");
+			using var response = await HttpClient.PostAsync(endpoint, content);
+
+#if DEBUG
+			var messageContent = await response.Content.ReadAsStringAsync();
+
+			return messageContent;
+#else
+			return await response.Content.ReadAsStringAsync();
+#endif
 		}
 	}
 }
