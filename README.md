@@ -9,8 +9,7 @@ Available as a NuGet package [here][2].
 ```C#
 var geocodio = new GeocodioClient(
     httpClient,
-    "{key}",
-    "{endpointVersion}"// optional
+    "{key}"
 );
 ```
 
