@@ -30,9 +30,7 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeResponse> GetGeocodeAsync(
 			GeocodeRequest request) {
 			if (request is null) {
-				return new GeocodeResponse {
-					Error = "The request is null."
-				};
+				return ResponseBase.Invalid<GeocodeResponse>();
 			}
 
 			var response = await GetResponseAsync(request);
@@ -50,9 +48,7 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
 			GeocodeBatchRequest request) {
 			if (request is null) {
-				return new GeocodeBatchResponse {
-					Error = "The request is null."
-				};
+				return ResponseBase.Invalid<GeocodeBatchResponse>();
 			}
 
 			if (request.Addresses.Count() > MaxBatchCount) {
@@ -74,9 +70,7 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
 			ReverseGeocodeRequest request) {
 			if (request is null) {
-				return new GeocodeResponse {
-					Error = "The request is null."
-				};
+				return ResponseBase.Invalid<GeocodeResponse>();
 			}
 
 			var response = await GetResponseAsync(request);
@@ -94,9 +88,7 @@ namespace Arex388.Geocodio {
 		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
 			ReverseGeocodeBatchRequest request) {
 			if (request is null) {
-				return new GeocodeBatchResponse {
-					Error = "The request is null."
-				};
+				return ResponseBase.Invalid<GeocodeBatchResponse>();
 			}
 
 			if (request.Coordinates.Count > MaxBatchCount) {
@@ -107,6 +99,8 @@ namespace Arex388.Geocodio {
 
 			return JsonConvert.DeserializeObject<GeocodeBatchResponse>(response);
 		}
+
+		//	========================================================================
 
 		private async Task<string> GetResponseAsync(
 			RequestBase request) {
@@ -131,7 +125,7 @@ namespace Arex388.Geocodio {
 #if DEBUG
 			var responseContent = await response.Content.ReadAsStringAsync();
 
-			Console.WriteLine(responseContent);
+			Console.Write(responseContent);
 
 			return responseContent;
 #else
@@ -146,9 +140,11 @@ namespace Arex388.Geocodio {
 			using var response = await HttpClient.PostAsync(endpoint, content);
 
 #if DEBUG
-			var messageContent = await response.Content.ReadAsStringAsync();
+			var responseContent = await response.Content.ReadAsStringAsync();
 
-			return messageContent;
+			Console.Write(responseContent);
+
+			return responseContent;
 #else
 			return await response.Content.ReadAsStringAsync();
 #endif
