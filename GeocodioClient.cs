@@ -1,153 +1,246 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Arex388.Geocodio {
-	public sealed class GeocodioClient {
-		private const int MaxBatchCount = 10000;
+    public sealed class GeocodioClient {
+        /// <summary>
+        /// The maximum number of coordiantes allowed for a batch request.
+        /// </summary>
+        private const int MaxBatchCount = 10000;
 
-		private HttpClient HttpClient { get; }
-		private string Key { get; }
+        /// <summary>
+        /// Is debugging enabled.
+        /// </summary>
+        private bool Debug { get; }
 
-		public GeocodioClient(
-			HttpClient httpClient,
-			string key) {
-			HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-			Key = key ?? throw new ArgumentNullException(nameof(key));
-		}
+        /// <summary>
+        /// An instance of HttpClient.
+        /// </summary>
+        private HttpClient HttpClient { get; }
 
-		public async Task<GeocodeResponse> GetGeocodeAsync(
-			string address,
-			params string[] fields) => await GetGeocodeAsync(new GeocodeRequest {
-				Address = address,
-				Fields = fields
-			});
+        /// <summary>
+        /// Your geocod.io API key.
+        /// </summary>
+        private string Key { get; }
 
-		public async Task<GeocodeResponse> GetGeocodeAsync(
-			GeocodeRequest request) {
-			if (request is null) {
-				return ResponseBase.Invalid<GeocodeResponse>();
-			}
+        /// <summary>
+        /// Geocod.io API client.
+        /// </summary>
+        /// <param name="httpClient">An instance of HttpClient.</param>
+        /// <param name="key">Your geocod.io API key.</param>
+        /// <param name="debug">Toggle capturing the raw JSON response from Geocod.io and returning it as part of the deserialized response object.</param>
+        public GeocodioClient(
+            HttpClient httpClient,
+            string key,
+            bool debug = false) {
+            Debug = debug;
+            HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            Key = key ?? throw new ArgumentNullException(nameof(key));
+        }
 
-			var response = await GetResponseAsync(request);
+        /// <summary>
+        /// Geocode an address.
+        /// </summary>
+        /// <param name="address">The address to geocode.</param>
+        /// <param name="fields">Optional fields to expand in the response.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public Task<GeocodeResponse> GeocodeAsync(
+            string address,
+            params string[] fields) => GeocodeAsync(new GeocodeRequest {
+                Address = address,
+                Fields = fields
+            });
 
-			return JsonConvert.DeserializeObject<GeocodeResponse>(response);
-		}
+        /// <summary>
+        /// Geocode an address.
+        /// </summary>
+        /// <param name="request">A GeocodeRequest instance.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public async Task<GeocodeResponse> GeocodeAsync(
+            GeocodeRequest request) {
+            if (request is null) {
+                return InvalidRequestResponse<GeocodeResponse>();
+            }
 
-		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
-			IList<string> addresses,
-			params string[] fields) => await GetGeocodeBatchAsync(new GeocodeBatchRequest {
-				Addresses = addresses,
-				Fields = fields
-			});
+            var response = await GetResponseAsync(request);
+            var responseObj = JsonConvert.DeserializeObject<GeocodeResponse>(response);
 
-		public async Task<GeocodeBatchResponse> GetGeocodeBatchAsync(
-			GeocodeBatchRequest request) {
-			if (request is null) {
-				return ResponseBase.Invalid<GeocodeBatchResponse>();
-			}
+            if (Debug) {
+                responseObj.Json = response;
+            }
 
-			if (request.Addresses.Count() > MaxBatchCount) {
-				throw new InvalidOperationException($"You're attempting to batch geocode {request.Addresses.Count()} addresses, which is more than the permitted limit of {MaxBatchCount}.");
-			}
+            return responseObj;
+        }
 
-			var response = await GetResponseAsync(request);
+        /// <summary>
+        /// Geocode a batch of addresses.
+        /// </summary>
+        /// <param name="addresses">The addresses to geocode.</param>
+        /// <param name="fields">Optional fields to expand in the response.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public Task<GeocodeBatchResponse> GeocodeBatchAsync(
+            IList<string> addresses,
+            params string[] fields) => GeocodeBatchAsync(new GeocodeBatchRequest {
+                Addresses = addresses,
+                Fields = fields
+            });
 
-			return JsonConvert.DeserializeObject<GeocodeBatchResponse>(response);
-		}
+        /// <summary>
+        /// Geocode a batch of addresses.
+        /// </summary>
+        /// <param name="request">A GeocodeRequest instance.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public async Task<GeocodeBatchResponse> GeocodeBatchAsync(
+            GeocodeBatchRequest request) {
+            if (request is null) {
+                return InvalidRequestResponse<GeocodeBatchResponse>();
+            }
 
-		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
-			string location,
-			params string[] fields) => await GetReverseGeocodeAsync(new ReverseGeocodeRequest {
-				Fields = fields,
-				Location = location
-			});
+            if (request.Addresses.Count > MaxBatchCount) {
+                return InvalidBatchCountResponse<GeocodeBatchResponse>();
+            }
 
-		public async Task<GeocodeResponse> GetReverseGeocodeAsync(
-			ReverseGeocodeRequest request) {
-			if (request is null) {
-				return ResponseBase.Invalid<GeocodeResponse>();
-			}
+            var response = await GetResponseAsync(request);
+            var responseObj = JsonConvert.DeserializeObject<GeocodeBatchResponse>(response);
 
-			var response = await GetResponseAsync(request);
+            if (Debug) {
+                responseObj.Json = response;
+            }
 
-			return JsonConvert.DeserializeObject<GeocodeResponse>(response);
-		}
+            return responseObj;
+        }
 
-		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
-			IList<string> coordinates,
-			params string[] fields) => await GetReverseGeocodeBatchAsync(new ReverseGeocodeBatchRequest {
-				Coordinates = coordinates,
-				Fields = fields
-			});
+        /// <summary>
+        /// Reverse geocode a coordinate.
+        /// </summary>
+        /// <param name="location">The coordiante to reverse geocode.</param>
+        /// <param name="fields">Optional fields to expand in the response.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public Task<GeocodeResponse> ReverseGeocodeAsync(
+            string location,
+            params string[] fields) => ReverseGeocodeAsync(new ReverseGeocodeRequest {
+                Fields = fields,
+                Location = location
+            });
 
-		public async Task<GeocodeBatchResponse> GetReverseGeocodeBatchAsync(
-			ReverseGeocodeBatchRequest request) {
-			if (request is null) {
-				return ResponseBase.Invalid<GeocodeBatchResponse>();
-			}
+        /// <summary>
+        /// Reverse geocode a coordinate.
+        /// </summary>
+        /// <param name="request">A GeocodeRequest instance.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public async Task<GeocodeResponse> ReverseGeocodeAsync(
+            ReverseGeocodeRequest request) {
+            if (request is null) {
+                return InvalidRequestResponse<GeocodeResponse>();
+            }
 
-			if (request.Coordinates.Count > MaxBatchCount) {
-				throw new InvalidOperationException($"You're attempting to batch reverse geocode {request.Coordinates.Count()} coordinates, which is more than the permitted limit of {MaxBatchCount}.");
-			}
+            var response = await GetResponseAsync(request);
+            var responseObj = JsonConvert.DeserializeObject<GeocodeResponse>(response);
 
-			var response = await GetResponseAsync(request);
+            if (Debug) {
+                responseObj.Json = response;
+            }
 
-			return JsonConvert.DeserializeObject<GeocodeBatchResponse>(response);
-		}
+            return responseObj;
+        }
 
-		//	========================================================================
+        /// <summary>
+        /// Reverse geocode a batch of coordinates.
+        /// </summary>
+        /// <param name="coordinates">The coordinates to reverse geocode.</param>
+        /// <param name="fields">Optional fields to expand in the response.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public Task<GeocodeBatchResponse> ReverseGeocodeBatchAsync(
+            IList<string> coordinates,
+            params string[] fields) => ReverseGeocodeBatchAsync(new ReverseGeocodeBatchRequest {
+                Coordinates = coordinates,
+                Fields = fields
+            });
 
-		private async Task<string> GetResponseAsync(
-			RequestBase request) {
-			var endpoint = $"https://api.geocod.io/v1.4/{request.Endpoint}&api_key={Key}";
+        /// <summary>
+        /// Reverse geocode a batch of coordinates.
+        /// </summary>
+        /// <param name="request">A GeocodeRequest instance.</param>
+        /// <returns>A GeocodeResponse.</returns>
+        public async Task<GeocodeBatchResponse> ReverseGeocodeBatchAsync(
+            ReverseGeocodeBatchRequest request) {
+            if (request is null) {
+                return InvalidRequestResponse<GeocodeBatchResponse>();
+            }
 
-			try {
-				if (request.Method == HttpMethod.Get) {
-					return await GetGetResponseAsync(request, endpoint);
-				}
+            if (request.Coordinates.Count > MaxBatchCount) {
+                return InvalidBatchCountResponse<GeocodeBatchResponse>();
+            }
 
-				return await GetPostResponseAsync(request, endpoint);
-			} catch (HttpRequestException) {
-				return null;
-			}
-		}
+            var response = await GetResponseAsync(request);
+            var responseObj = JsonConvert.DeserializeObject<GeocodeBatchResponse>(response);
 
-		private async Task<string> GetGetResponseAsync(
-			RequestBase request,
-			string endpoint) {
-			var response = await HttpClient.GetAsync(endpoint);
+            if (Debug) {
+                responseObj.Json = response;
+            }
 
-#if DEBUG
-			var responseContent = await response.Content.ReadAsStringAsync();
+            return responseObj;
+        }
 
-			Console.Write(responseContent);
+        //  ========================================================================
+        //  Response
+        //	========================================================================
 
-			return responseContent;
-#else
-			return await response.Content.ReadAsStringAsync();
-#endif
-		}
+        private async Task<string> GetResponseAsync(
+            RequestBase request) {
+            var endpoint = $"https://api.geocod.io/v1.4/{request.Endpoint}&api_key={Key}";
 
-		private async Task<string> GetPostResponseAsync(
-			RequestBase request,
-			string endpoint) {
-			using var content = new StringContent(request.Body, Encoding.UTF8, "application/json");
-			using var response = await HttpClient.PostAsync(endpoint, content);
+            try {
+                if (request.Method == HttpMethod.Get) {
+                    return await GetGetResponseAsync(endpoint);
+                }
 
-#if DEBUG
-			var responseContent = await response.Content.ReadAsStringAsync();
+                return await GetPostResponseAsync(request, endpoint);
+            } catch (HttpRequestException e) {
+                var error = $"{e.Message}\n{e.InnerException?.Message}".Trim();
 
-			Console.Write(responseContent);
+                return $"{{\"error\":\"{error}\",\"success\":false}}";
+            }
+        }
 
-			return responseContent;
-#else
-			return await response.Content.ReadAsStringAsync();
-#endif
-		}
-	}
+        private async Task<string> GetGetResponseAsync(
+            string endpoint) {
+            var response = await HttpClient.GetAsync(endpoint);
+
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        private async Task<string> GetPostResponseAsync(
+            RequestBase request,
+            string endpoint) {
+            using var content = new StringContent(request.Body, Encoding.UTF8, "application/json");
+            using var response = await HttpClient.PostAsync(endpoint, content);
+
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        //  ========================================================================
+        //  Utilities
+        //  ========================================================================
+
+        /// <summary>
+        /// A failure due to over max number of allowed coordiantes per request.
+        /// </summary>
+        /// <typeparam name="T">The response type.</typeparam>
+        /// <returns>The response.</returns>
+        private static T InvalidBatchCountResponse<T>()
+            where T : ResponseBase, new() => ResponseBase.Invalid<T>($"You can only geocode {MaxBatchCount} coordinates per request.");
+
+        /// <summary>
+        /// A failure due to a null request.
+        /// </summary>
+        /// <typeparam name="T">The response type.</typeparam>
+        /// <returns>The response.</returns>
+        private static T InvalidRequestResponse<T>()
+            where T : ResponseBase, new() => ResponseBase.Invalid<T>("The request is invalid.");
+    }
 }

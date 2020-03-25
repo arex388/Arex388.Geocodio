@@ -1,0 +1,1294 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Arex388.Geocodio</name>
+    </assembly>
+    <members>
+        <member name="F:Arex388.Geocodio.GeocodioClient.MaxBatchCount">
+            <summary>
+            The maximum number of coordiantes allowed for a batch request.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.GeocodioClient.Debug">
+            <summary>
+            Is debugging enabled.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.GeocodioClient.HttpClient">
+            <summary>
+            An instance of HttpClient.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.GeocodioClient.Key">
+            <summary>
+            Your geocod.io API key.
+            </summary>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.#ctor(System.Net.Http.HttpClient,System.String,System.Boolean)">
+            <summary>
+            Geocod.io API client.
+            </summary>
+            <param name="httpClient">An instance of HttpClient.</param>
+            <param name="key">Your geocod.io API key.</param>
+            <param name="debug">Toggle capturing the raw JSON response from Geocod.io and returning it as part of the deserialized response object.</param>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(System.String,System.String[])">
+            <summary>
+            Geocode an address.
+            </summary>
+            <param name="address">The address to geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(Arex388.Geocodio.GeocodeRequest)">
+            <summary>
+            Geocode an address.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeBatchAsync(System.Collections.Generic.IList{System.String},System.String[])">
+            <summary>
+            Geocode a batch of addresses.
+            </summary>
+            <param name="addresses">The addresses to geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeBatchAsync(Arex388.Geocodio.GeocodeBatchRequest)">
+            <summary>
+            Geocode a batch of addresses.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeAsync(System.String,System.String[])">
+            <summary>
+            Reverse geocode a coordinate.
+            </summary>
+            <param name="location">The coordiante to reverse geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeAsync(Arex388.Geocodio.ReverseGeocodeRequest)">
+            <summary>
+            Reverse geocode a coordinate.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeBatchAsync(System.Collections.Generic.IList{System.String},System.String[])">
+            <summary>
+            Reverse geocode a batch of coordinates.
+            </summary>
+            <param name="coordinates">The coordinates to reverse geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeBatchAsync(Arex388.Geocodio.ReverseGeocodeBatchRequest)">
+            <summary>
+            Reverse geocode a batch of coordinates.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <returns>A GeocodeResponse.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.InvalidBatchCountResponse``1">
+            <summary>
+            A failure due to over max number of allowed coordiantes per request.
+            </summary>
+            <typeparam name="T">The response type.</typeparam>
+            <returns>The response.</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.InvalidRequestResponse``1">
+            <summary>
+            A failure due to a null request.
+            </summary>
+            <typeparam name="T">The response type.</typeparam>
+            <returns>The response.</returns>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.NearestPlace">
+            <summary>
+            Closest city/town/place
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.NearestStreet">
+            <summary>
+            Nearest match for a specific street with estimated street number
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.Place">
+            <summary>
+            The point is a city/town/place
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.Point">
+            <summary>
+            We found the exact point from address range interpolation where the range contained a single point
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.RangeInterpolation">
+            <summary>
+            We found the exact point by performing address range interpolation
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.Rooftop">
+            <summary>
+            We found the exact point with rooftop level accuracy
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.State">
+            <summary>
+            The point is a state
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.StreetCenter">
+            <summary>
+            The result is a geocoded street centroid
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female5YearsUnder">
+            <summary>
+            Female: Under 5 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female5To9Years">
+            <summary>
+            Female: 5 to 9 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female10To14Years">
+            <summary>
+            Female: 10 to 14 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female15To17Years">
+            <summary>
+            Female: 15 to 17 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female18To19Years">
+            <summary>
+            Female: 18 and 19 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female20Years">
+            <summary>
+            Female: 20 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female21Years">
+            <summary>
+            Female: 21 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female22To24Years">
+            <summary>
+            Female: 22 to 24 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female25To29Years">
+            <summary>
+            Female: 25 to 29 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female30To34Years">
+            <summary>
+            Female: 30 to 34 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female35To39Years">
+            <summary>
+            Female: 35 to 39 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female40To44Years">
+            <summary>
+            Female: 40 to 44 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female45To49Years">
+            <summary>
+            Female: 45 to 49 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female50To54Years">
+            <summary>
+            Female: 50 to 54 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female55To59Years">
+            <summary>
+            Female: 55 to 59 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female60To61Years">
+            <summary>
+            Female: 60 and 61 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female64To64Years">
+            <summary>
+            Female: 62 to 64 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female65To66Years">
+            <summary>
+            Female: 65 and 66 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female67To69Years">
+            <summary>
+            Female: 67 to 69 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female70To74Years">
+            <summary>
+            Female: 70 to 74 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female75To79Years">
+            <summary>
+            Female: 75 to 79 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female80To84Years">
+            <summary>
+            Female: 80 to 84 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female85YearsOver">
+            <summary>
+            Female: 85 years and over
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male5YearsUnder">
+            <summary>
+            Male: Under 5 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male5To9Years">
+            <summary>
+            Male: 5 to 9 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male10To14Years">
+            <summary>
+            Male: 10 to 14 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male15To17Years">
+            <summary>
+            Male: 15 to 17 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male18To19Years">
+            <summary>
+            Male: 18 and 19 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male20Years">
+            <summary>
+            Male: 20 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male21Years">
+            <summary>
+            Male: 21 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male22To24Years">
+            <summary>
+            Male: 22 to 24 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male25To29Years">
+            <summary>
+            Male: 25 to 29 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male30To34Years">
+            <summary>
+            Male: 30 to 34 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male35To39Years">
+            <summary>
+            Male: 35 to 39 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male40To44Years">
+            <summary>
+            Male: 40 to 44 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male45To49Years">
+            <summary>
+            Male: 45 to 49 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male50To54Years">
+            <summary>
+            Male: 50 to 54 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male55To59Years">
+            <summary>
+            Male: 55 to 59 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male60To61Years">
+            <summary>
+            Male: 60 and 61 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male64To64Years">
+            <summary>
+            Male: 62 to 64 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male65To66Years">
+            <summary>
+            Male: 65 and 66 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male67To69Years">
+            <summary>
+            Male: 67 to 69 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male70To74Years">
+            <summary>
+            Male: 70 to 74 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male75To79Years">
+            <summary>
+            Male: 75 to 79 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male80To84Years">
+            <summary>
+            Male: 80 to 84 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Male85YearsOver">
+            <summary>
+            Male: 85 years and over
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.NotHispanicOrLatino">
+            <summary>
+            Not Hispanic or Latino
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.NotHispanicOrLatinoWhiteAlone">
+            <summary>
+            Not Hispanic or Latino: White alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.NotHispanicOrLatinoBlackOrAfricanAmaricanAlone">
+            <summary>
+            Not Hispanic or Latino: Black or African American alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.NotHispanicOrLatinoAmericanIndianAndAlaskaNativeAlone">
+            <summary>
+            Not Hispanic or Latino: American Indian and Alaska Native alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.NotHispanicOrLatinoAsianAlone">
+            <summary>
+            Not Hispanic or Latino: Asian alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.NotHispanicOrLatinoNativeHawaiianAndOtherPacificIslanderAlone">
+            <summary>
+            Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.NotHispanicOrLatinoOtherAlone">
+            <summary>
+            Not Hispanic or Latino: Some other race alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.TwoOrMore">
+            <summary>
+            Two or more races
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.TwoOrMoreTwoIncludingOther">
+            <summary>
+            Two or more races: Two races including Some other race
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.TwoOrMoreTwoExcludingOtherThreeOrMore">
+            <summary>
+            Two or more races: Two races excluding Some other race, and three or more races
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.HispanicOrLatino">
+            <summary>
+            Hispanic or Latino
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.HispanicOrLatinoWhiteAlone">
+            <summary>
+            Hispanic or Latino: White alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.HispanicOrLatinoBlackOrAfricanAmericanAlone">
+            <summary>
+            Hispanic or Latino: Black or African American alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.HispanicOrLatinoAmericanIndianAndAlaskaNativeAlone">
+            <summary>
+            Hispanic or Latino: American Indian and Alaska Native alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.HispanicOrLatinoAsianAlone">
+            <summary>
+            Hispanic or Latino: Asian alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.HispanicOrLatinoNativeHawaiianAndOtherPacificIslanderAlone">
+            <summary>
+            Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsDemographicsRace.HispanicOrLatinoOtherAlone">
+            <summary>
+            Hispanic or Latino: Some other race alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomics.Households">
+            <summary>
+            Number of households
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomics.HouseholdIncome">
+            <summary>
+            Household income
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomics.MedianIncome">
+            <summary>
+            Median household income
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range0KTo10K">
+            <summary>
+            Less than $10,000
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range10KTo15K">
+            <summary>
+            $10,000 to $14,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range15KTo20K">
+            <summary>
+            $15,000 to $19,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range20KTo25K">
+            <summary>
+            $20,000 to $24,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range25KTo30K">
+            <summary>
+            $25,000 to $29,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range30KTo35K">
+            <summary>
+            $30,000 to $34,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range35KTo40K">
+            <summary>
+            $35,000 to $39,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range40KTo45K">
+            <summary>
+            $40,000 to $44,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range45KTo50K">
+            <summary>
+            $45,000 to $49,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range50KTo60K">
+            <summary>
+            $50,000 to $59,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range60KTo75K">
+            <summary>
+            $60,000 to $74,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range75KTo100K">
+            <summary>
+            $75,000 to $99,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range100KTo125K">
+            <summary>
+            $100,000 to $124,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range125KTo150K">
+            <summary>
+            $125,000 to $149,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range150KTo200K">
+            <summary>
+            $150,000 to $199,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsEconomicsHouseholdIncome.Range200KOrMore">
+            <summary>
+            $200,000 or more
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamilies.ByHousehold">
+            <summary>
+            Household type by household
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamilies.ByPopulation">
+            <summary>
+            Household type by population
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamilies.MaritalStatus">
+            <summary>
+            Marital status
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.Family">
+            <summary>
+            Family households
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyMarried">
+            <summary>
+            Family households: Married-couple family
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyOther">
+            <summary>
+            Other family
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyOtherMaleNoWife">
+            <summary>
+            Other family: Male householder, no wife present
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyOtherFemaleNoHusband">
+            <summary>
+            Other family: Female householder, no husband present
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.NonFamily">
+            <summary>
+            Nonfamily households
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.NonFamilyLivingAlone">
+            <summary>
+            Nonfamily households: Householder living alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.NonFamilyNotLivingAlone">
+            <summary>
+            Nonfamily households: Householder not living alone
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamily">
+            <summary>
+            In family households
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InMarriedFamily">
+            <summary>
+            In married-couple family
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InMarriedFamilyRelatives">
+            <summary>
+            In married-couple family: Relatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InMarriedFamilyNonRelatives">
+            <summary>
+            In married-couple family: Nonrelatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWife">
+            <summary>
+            In male householder, no wife present, family
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWifeRelatives">
+            <summary>
+            In male householder, no wife present, family: Relatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWifeNonRelatives">
+            <summary>
+            In male householder, no wife present, family: Nonrelatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusband">
+            <summary>
+            In female householder, no husband present, family
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusbandRelatives">
+            <summary>
+            In female householder, no husband present, family: Relatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusbandNonRelatives">
+            <summary>
+            In female householder, no husband present, family: Nonrelatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusbandNonFamily">
+            <summary>
+            In female householder, no husband present, family: In nonfamily households
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleNeverMarried">
+            <summary>
+            Male: Never married
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.NowMarried">
+            <summary>
+            Now married
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.NowMarriedSpousePresent">
+            <summary>
+            Now married: Married, spouse present
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsent">
+            <summary>
+            Married, spouse absent
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentSeparated">
+            <summary>
+            Married, spouse absent: Separated
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentOther">
+            <summary>
+            Married, spouse absent: Other
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentWidowed">
+            <summary>
+            Married, spouse absent: Widowed
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentDivorced">
+            <summary>
+            Married, spouse absent: Divorced
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNeverMarried">
+            <summary>
+            Female: Never married
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousing.Count">
+            <summary>
+            Number of housing units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousing.Occupancy">
+            <summary>
+            Occupancy status
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousing.Ownership">
+            <summary>
+            Ownership of occupied units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousing.OwnedMedianValue">
+            <summary>
+            Median value of owner-occupied housing units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousing.OwnedValues">
+            <summary>
+            Value of owner-occupied housing units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousing.Units">
+            <summary>
+            Units in structure
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range0KTo10K">
+            <summary>
+            Less than $10,000
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range10KTo15K">
+            <summary>
+            $10,000 to $14,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range15KTo20K">
+            <summary>
+            $15,000 to $19,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range20KTo25K">
+            <summary>
+            $20,000 to $24,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range25KTo30K">
+            <summary>
+            $25,000 to $29,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range30KTo35K">
+            <summary>
+            $30,000 to $34,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range35KTo40K">
+            <summary>
+            $35,000 to $39,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range40KTo50K">
+            <summary>
+            $40,000 to $49,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range50KTo60K">
+            <summary>
+            $50,000 to $59,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range60KTo70K">
+            <summary>
+            $60,000 to $69,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range70KTo80K">
+            <summary>
+            $70,000 to $79,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range80KTo90K">
+            <summary>
+            $80,000 to $89,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range90KTo100K">
+            <summary>
+            $90,000 to $99,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range100KTo125K">
+            <summary>
+            $100,000 to $124,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range125KTo150K">
+            <summary>
+            $125,000 to $149,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range150KTo175K">
+            <summary>
+            $150,000 to $174,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range175KTo200K">
+            <summary>
+            $175,000 to $199,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range200KTo250K">
+            <summary>
+            $200,000 to $249,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range250KTo300K">
+            <summary>
+            $250,000 to $299,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range300KTo400K">
+            <summary>
+            $300,000 to $399,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range400KTo500K">
+            <summary>
+            $400,000 to $499,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range500KTo750K">
+            <summary>
+            $500,000 to $749,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range750KTo1M">
+            <summary>
+            $750,000 to $999,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range1MTo1M500K">
+            <summary>
+            $1,000,000 to $1,499,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range1M500KTo2M">
+            <summary>
+            $1,500,000 to $1,999,999
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnedValues.Range2MOrMore">
+            <summary>
+            $2,000,000 or more
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnership.OwnerOccupied">
+            <summary>
+            Owner occupied
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingOwnership.RenterOccupied">
+            <summary>
+            Renter occupied
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.OneAttached">
+            <summary>
+            1, attached unit
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.OneDetached">
+            <summary>
+            1, detached unit
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Two">
+            <summary>
+            2 units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Range3To4">
+            <summary>
+            3 or 4 units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Range5To9">
+            <summary>
+            5 to 9 units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Range10To19">
+            <summary>
+            10 to 19 unit
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Range20To49">
+            <summary>
+            20 to 49 units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Range50OrMore">
+            <summary>
+            50 or more units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Mobile">
+            <summary>
+            Mobile home units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsHousingUnits.Other">
+            <summary>
+            Boat, RV, van, etc. units
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocial.EducationStatus">
+            <summary>
+            Population by minimum level of education
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocial.MilitaryStatus">
+            <summary>
+            Period of military service for veterans
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocial.VeteranStatus">
+            <summary>
+            Population with veteran status
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleNoSchoolCompleted">
+            <summary>
+            Female: No schooling completed
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleRangeNurseryTo4ThGrade">
+            <summary>
+            Female: Nursery to 4th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleRange5ThAnd6ThGrade">
+            <summary>
+            Female: 5th and 6th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleRange7ThAnd8ThGrade">
+            <summary>
+            Female: 7th and 8th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Female9ThGrade">
+            <summary>
+            Female: 9th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Female10ThGrade">
+            <summary>
+            Female: 10th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Female11ThGrade">
+            <summary>
+            Female: 11th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Female12ThGradeNoDiploma">
+            <summary>
+            Female: 12th grade, no diploma
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleHighSchoolCompleted">
+            <summary>
+            Female: High school graduate (includes equivalency)
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleCollegeLessThan1Year">
+            <summary>
+            Female: Some college, less than 1 year
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleCollegeMoreThan1YearNoDegree">
+            <summary>
+            Female: Some college, 1 or more years, no degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleAssociatesDegree">
+            <summary>
+            Female: Associate's degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleBachelorsDegree">
+            <summary>
+            Female: Bachelor's degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleMasterDegree">
+            <summary>
+            Female: Master's degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleProfessionalDegree">
+            <summary>
+            Female: Professional school degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.FemaleDoctorateDegree">
+            <summary>
+            Female: Doctorate degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleNoSchoolCompleted">
+            <summary>
+            Male: No schooling completed
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleRangeNurseryTo4ThGrade">
+            <summary>
+            Male: Nursery to 4th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleRange5ThAnd6ThGrade">
+            <summary>
+            Male: 5th and 6th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleRange7ThAnd8ThGrade">
+            <summary>
+            Male: 7th and 8th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Male9ThGrade">
+            <summary>
+            Male: 9th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Male10ThGrade">
+            <summary>
+            Male: 10th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Male11ThGrade">
+            <summary>
+            Male: 11th grade
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.Male12ThGradeNoDiploma">
+            <summary>
+            Male: 12th grade, no diploma
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleHighSchoolCompleted">
+            <summary>
+            Male: High school graduate (includes equivalency)
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleCollegeLessThan1Year">
+            <summary>
+            Male: Some college, less than 1 year
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleCollegeMoreThan1YearNoDegree">
+            <summary>
+            Male: Some college, 1 or more years, no degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleAssociatesDegree">
+            <summary>
+            Male: Associate's degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleBachelorsDegree">
+            <summary>
+            Male: Bachelor's degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleMasterDegree">
+            <summary>
+            Male: Master's degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleProfessionalDegree">
+            <summary>
+            Male: Professional school degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialEducationStatus.MaleDoctorateDegree">
+            <summary>
+            Male: Doctorate degree
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.Gulf2001NoGulf1990NoVietnam">
+            <summary>
+            Gulf War (9/2001 or later), no Gulf War (8/1990 to 8/2001), no Vietnam Era
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.Gulf2001AndGulf1990NoVietnam">
+            <summary>
+            Gulf War (9/2001 or later) and Gulf War (8/1990 to 8/2001), no Vietnam Era
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.Gulf2001AndGulf1990AndVietnam">
+            <summary>
+            Gulf War (9/2001 or later), and Gulf War (8/1990 to 8/2001), and Vietnam Era
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.Gulf1990To2001NoVietnam">
+            <summary>
+            Gulf War (8/1990 to 8/2001), no Vietnam Era
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.Gulf1990To2001AndVietnam">
+            <summary>
+            Gulf War (8/1990 to 8/2001) and Vietnam Era
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.VietnamNoKoreaNoWw2">
+            <summary>
+            Vietnam Era, no Korean War, no World War II
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.VietnamAndKoreaNoWw2">
+            <summary>
+            Vietnam Era and Korean War, no World War II
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.VietnamAndKoreaAndWw2">
+            <summary>
+            Vietnam Era and Korean War and World War II
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.KoreaNoVietnamNoWw2">
+            <summary>
+            Korean War, no Vietnam Era, no World War II
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.KoreaAndWw2NoVietnam">
+            <summary>
+            Korean War and World War II, no Vietnam Era
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.Ww2NoKoreaNoVietnam">
+            <summary>
+            World War II, no Korean War, no Vietnam Era
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.BetweenGulfAndVietnam">
+            <summary>
+            Between Gulf War and Vietnam Era only
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.BetweenVietnamAndKorea">
+            <summary>
+            Between Vietnam Era and Korean War only
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.BetweenKoreaAndWw2">
+            <summary>
+            Between Korean War and World War II only
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialMilitaryStatus.PreWw2">
+            <summary>
+            Pre-World War II only
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.FemaleVeteran">
+            <summary>
+            Female: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.FemaleNonVeteran">
+            <summary>
+            Female: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.MaleVeteran">
+            <summary>
+            Male: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.MaleNonVeteran">
+            <summary>
+            Male: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.Census.BlockCode">
+            <summary>
+            The full 4-digit block code that the location belongs to. This is the smallest geographical unit that the U.S. Census Bureau provides statistical data for.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.Census.BlockGroup">
+            <summary>
+            The single-digit group number for the block
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.Census.CountyFipsCode">
+            <summary>
+            The five-digit county FIPS code. The two first digits represents the state. A full list of US counties is available on Wikipedia
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.Census.FullFipsCode">
+            <summary>
+            The full 15-digit fips code, consisting of the county fips, tract code and block code
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.Census.StateFipsCode">
+            <summary>
+            The two-digit state FIPS code. A full list is available on Wikipedia
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.Census.TractCode">
+            <summary>
+            The 6-digit census tract code. This is a subdivision of a county, used for statistical purposes.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.Census.Year">
+            <summary>
+            The full year that the Census data belongs to (The U.S. Census Bureau might make slight boundary changes from year to year)
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.CensusArea.Code">
+            <summary>
+            Unique code for the area, also known as the CBSA code (MSA) OR the unique census-defined code for the area (CSA)
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.CensusArea.Name">
+            <summary>
+            The official Census-designated name for the area
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.CensusArea.Type">
+            <summary>
+            Can either be "metropolitan" or "micropolitan"
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.CensusPlace.FipsCode">
+            <summary>
+            The 7-digit place FIPS code. A place is defined as a city or other census designated area. A full list of ANSI codes is available from the U.S. Census Bureau
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.CensusPlace.Name">
+            <summary>
+            The official Census-designated name for the place
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.CongressionalDistrict.Legislator">
+            <summary>
+            current_legislator was renamed to current_legislators (plural)
+            and changed to a collection in v1.2.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.ResponseBase.Error">
+            <summary>
+            The error message if the response failed.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.ResponseBase.Json">
+            <summary>
+            The raw JSON of the response for debugging.
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.ResponseBase.Success">
+            <summary>
+            Was the request successful or not.
+            </summary>
+        </member>
+        <member name="M:Arex388.Geocodio.ResponseBase.Invalid``1(System.String)">
+            <summary>
+            An invalid response instance with an optional error message.
+            </summary>
+            <typeparam name="T">The response type.</typeparam>
+            <param name="error">The error message (optional).</param>
+            <returns>T</returns>
+        </member>
+    </members>
+</doc>

@@ -1,3 +1,17 @@
+#### 1.4.2 (2020-03-24)
+
+- Targeting .NET Standard 2.0 now.
+- Changed all `const string` properties to `static readonly string`.
+- Renamed `GetGeocodeAsync` to `GeocodeAsync`.
+- Renamed `GetGeocodeBatchAsync` to `GeocodeBatchAsync`.
+- Renamed `GetReverseGeocodeAsync` to `ReverseGeocodeAsync`.
+- Renamed `GetReverseGeocodeBatchAsync` to `ReverseGeocodeBatchAsync`.
+- Changed over-batch limit requests to return a failure response instead of throwing an exception.
+- Enabled XML documentation to be generated for intellisense.
+- Added `Json` to `ResponseBase` to capture the raw JSON response from the API.
+- Added `debug` parameter to the `GeocodioClient` constructor. False by default. When set to true, the raw JSON response will be written to the `Json` property of the response.
+- Internal code clean up and rearrangement.
+
 #### 1.4.1 (2020-02-03)
 
 - Changed the invalid request response object.
