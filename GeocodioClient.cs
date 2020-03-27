@@ -190,6 +190,8 @@ namespace Arex388.Geocodio {
         //  Response
         //	========================================================================
 
+        private const string TimedOutResponse = "{{\"error\":\"The connection has timed out\",\"success\":false}}";
+
         private async Task<string> GetResponseAsync(
             RequestBase request) {
             var endpoint = $"https://api.geocod.io/v1.4/{request.Endpoint}&api_key={Key}";
@@ -199,11 +201,15 @@ namespace Arex388.Geocodio {
                     return await GetGetResponseAsync(endpoint);
                 }
 
-                return await GetPostResponseAsync(request, endpoint);
+                return await GetPostResponseAsync(
+                    request,
+                    endpoint);
             } catch (HttpRequestException e) {
                 var error = $"{e.Message}\n{e.InnerException?.Message}".Trim();
 
                 return $"{{\"error\":\"{error}\",\"success\":false}}";
+            } catch (TaskCanceledException) {
+                return TimedOutResponse;
             }
         }
 
