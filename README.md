@@ -12,7 +12,7 @@ Available as a NuGet package [here](https://www.nuget.org/packages/Arex388.Geoco
 
 #### v1.4.2
 
-Version 1.4.2 targets .NET Standard 2.0 now. I did this to resolve problems in my daily project targeting .NET Framework 4.8. There's also no real reason to stay on anything below .NET Standard 2.0 anyway. o quote Immo Landwerth from his [.NET Standard 2.1 announcement post](https://devblogs.microsoft.com/dotnet/announcing-net-standard-2-1/):
+Version 1.4.2 targets .NET Standard 2.0 now. I did this to resolve problems in my daily project targeting .NET Framework 4.8. There's also no real reason to stay on anything below .NET Standard 2.0 anyway. To quote Immo Landwerth from his [.NET Standard 2.1 announcement post](https://devblogs.microsoft.com/dotnet/announcing-net-standard-2-1/):
 
 > *Library authors who need to support .NET Framework customers should stay on .NET Standard 2.0.*
 
@@ -24,7 +24,7 @@ There's also breaking changes in this version. I just renamed the methods to mak
 var geocodio = new GeocodioClient(
     httpClient,
     "{key}",
-    // debug
+    // debug = true/false
 );
 ```
 

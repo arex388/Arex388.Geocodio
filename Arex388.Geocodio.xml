@@ -9,17 +9,17 @@
             The maximum number of coordiantes allowed for a batch request.
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.GeocodioClient.Debug">
+        <member name="F:Arex388.Geocodio.GeocodioClient._debug">
             <summary>
             Is debugging enabled.
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.GeocodioClient.HttpClient">
+        <member name="F:Arex388.Geocodio.GeocodioClient._httpClient">
             <summary>
             An instance of HttpClient.
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.GeocodioClient.Key">
+        <member name="F:Arex388.Geocodio.GeocodioClient._key">
             <summary>
             Your geocod.io API key.
             </summary>
@@ -30,7 +30,7 @@
             </summary>
             <param name="httpClient">An instance of HttpClient.</param>
             <param name="key">Your geocod.io API key.</param>
-            <param name="debug">Toggle capturing the raw JSON response from Geocod.io and returning it as part of the deserialized response object.</param>
+            <param name="debug">Toggle capturing the raw JSON response from geocod.io and returning it as part of the deserialized response object.</param>
         </member>
         <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(System.String,System.String[])">
             <summary>
@@ -99,12 +99,12 @@
             <typeparam name="T">The response type.</typeparam>
             <returns>The response.</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.InvalidRequestResponse``1">
+        <member name="M:Arex388.Geocodio.GeocodioClient.NullRequestResponse``1">
             <summary>
             A failure due to a null request.
             </summary>
             <typeparam name="T">The response type.</typeparam>
-            <returns>The response.</returns>
+            <returns>T</returns>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.NearestPlace">
             <summary>

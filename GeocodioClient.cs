@@ -15,31 +15,31 @@ namespace Arex388.Geocodio {
         /// <summary>
         /// Is debugging enabled.
         /// </summary>
-        private bool Debug { get; }
+        private readonly bool _debug;
 
         /// <summary>
         /// An instance of HttpClient.
         /// </summary>
-        private HttpClient HttpClient { get; }
+        private readonly HttpClient _httpClient;
 
         /// <summary>
         /// Your geocod.io API key.
         /// </summary>
-        private string Key { get; }
+        private readonly string _key;
 
         /// <summary>
         /// Geocod.io API client.
         /// </summary>
         /// <param name="httpClient">An instance of HttpClient.</param>
         /// <param name="key">Your geocod.io API key.</param>
-        /// <param name="debug">Toggle capturing the raw JSON response from Geocod.io and returning it as part of the deserialized response object.</param>
+        /// <param name="debug">Toggle capturing the raw JSON response from geocod.io and returning it as part of the deserialized response object.</param>
         public GeocodioClient(
             HttpClient httpClient,
             string key,
             bool debug = false) {
-            Debug = debug;
-            HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            Key = key ?? throw new ArgumentNullException(nameof(key));
+            _debug = debug;
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _key = key ?? throw new ArgumentNullException(nameof(key));
         }
 
         /// <summary>
@@ -63,13 +63,13 @@ namespace Arex388.Geocodio {
         public async Task<GeocodeResponse> GeocodeAsync(
             GeocodeRequest request) {
             if (request is null) {
-                return InvalidRequestResponse<GeocodeResponse>();
+                return NullRequestResponse<GeocodeResponse>();
             }
 
-            var response = await GetResponseAsync(request);
+            var response = await GetResponseAsync(request).ConfigureAwait(false);
             var responseObj = JsonConvert.DeserializeObject<GeocodeResponse>(response);
 
-            if (Debug) {
+            if (_debug) {
                 responseObj.Json = response;
             }
 
@@ -97,17 +97,17 @@ namespace Arex388.Geocodio {
         public async Task<GeocodeBatchResponse> GeocodeBatchAsync(
             GeocodeBatchRequest request) {
             if (request is null) {
-                return InvalidRequestResponse<GeocodeBatchResponse>();
+                return NullRequestResponse<GeocodeBatchResponse>();
             }
 
             if (request.Addresses.Count > MaxBatchCount) {
                 return InvalidBatchCountResponse<GeocodeBatchResponse>();
             }
 
-            var response = await GetResponseAsync(request);
+            var response = await GetResponseAsync(request).ConfigureAwait(false);
             var responseObj = JsonConvert.DeserializeObject<GeocodeBatchResponse>(response);
 
-            if (Debug) {
+            if (_debug) {
                 responseObj.Json = response;
             }
 
@@ -135,13 +135,13 @@ namespace Arex388.Geocodio {
         public async Task<GeocodeResponse> ReverseGeocodeAsync(
             ReverseGeocodeRequest request) {
             if (request is null) {
-                return InvalidRequestResponse<GeocodeResponse>();
+                return NullRequestResponse<GeocodeResponse>();
             }
 
-            var response = await GetResponseAsync(request);
+            var response = await GetResponseAsync(request).ConfigureAwait(false);
             var responseObj = JsonConvert.DeserializeObject<GeocodeResponse>(response);
 
-            if (Debug) {
+            if (_debug) {
                 responseObj.Json = response;
             }
 
@@ -169,17 +169,17 @@ namespace Arex388.Geocodio {
         public async Task<GeocodeBatchResponse> ReverseGeocodeBatchAsync(
             ReverseGeocodeBatchRequest request) {
             if (request is null) {
-                return InvalidRequestResponse<GeocodeBatchResponse>();
+                return NullRequestResponse<GeocodeBatchResponse>();
             }
 
             if (request.Coordinates.Count > MaxBatchCount) {
                 return InvalidBatchCountResponse<GeocodeBatchResponse>();
             }
 
-            var response = await GetResponseAsync(request);
+            var response = await GetResponseAsync(request).ConfigureAwait(false);
             var responseObj = JsonConvert.DeserializeObject<GeocodeBatchResponse>(response);
 
-            if (Debug) {
+            if (_debug) {
                 responseObj.Json = response;
             }
 
@@ -190,43 +190,39 @@ namespace Arex388.Geocodio {
         //  Response
         //	========================================================================
 
-        private const string TimedOutResponse = "{{\"error\":\"The connection has timed out\",\"success\":false}}";
-
         private async Task<string> GetResponseAsync(
             RequestBase request) {
-            var endpoint = $"https://api.geocod.io/v1.4/{request.Endpoint}&api_key={Key}";
+            var endpoint = $"https://api.geocod.io/v1.4/{request.Endpoint}&api_key={_key}";
 
             try {
                 if (request.Method == HttpMethod.Get) {
-                    return await GetGetResponseAsync(endpoint);
+                    return await GetGetResponseAsync(endpoint).ConfigureAwait(false);
                 }
 
-                return await GetPostResponseAsync(
-                    request,
-                    endpoint);
+                return await GetPostResponseAsync(request, endpoint).ConfigureAwait(false);
             } catch (HttpRequestException e) {
                 var error = $"{e.Message}\n{e.InnerException?.Message}".Trim();
 
                 return $"{{\"error\":\"{error}\",\"success\":false}}";
             } catch (TaskCanceledException) {
-                return TimedOutResponse;
+                return "{{\"error\":\"The request has timed out\",\"success\":false}}";
             }
         }
 
         private async Task<string> GetGetResponseAsync(
             string endpoint) {
-            var response = await HttpClient.GetAsync(endpoint);
+            var response = await _httpClient.GetAsync(endpoint).ConfigureAwait(false);
 
-            return await response.Content.ReadAsStringAsync();
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         private async Task<string> GetPostResponseAsync(
             RequestBase request,
             string endpoint) {
             using var content = new StringContent(request.Body, Encoding.UTF8, "application/json");
-            using var response = await HttpClient.PostAsync(endpoint, content);
+            using var response = await _httpClient.PostAsync(endpoint, content).ConfigureAwait(false);
 
-            return await response.Content.ReadAsStringAsync();
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         //  ========================================================================
@@ -245,8 +241,8 @@ namespace Arex388.Geocodio {
         /// A failure due to a null request.
         /// </summary>
         /// <typeparam name="T">The response type.</typeparam>
-        /// <returns>The response.</returns>
-        private static T InvalidRequestResponse<T>()
-            where T : ResponseBase, new() => ResponseBase.Invalid<T>("The request is invalid.");
+        /// <returns>T</returns>
+        private static T NullRequestResponse<T>()
+            where T : ResponseBase, new() => ResponseBase.Invalid<T>();
     }
 }

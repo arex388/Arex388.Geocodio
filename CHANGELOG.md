@@ -1,3 +1,11 @@
+#### 1.4.5 (2020-05-27)
+
+- Internal code clean up.
+
+#### 1.4.4 (2020-05-07)
+
+- Internal cleanup and hopefully performance optimizations by adding `ConfigureAwait(false)` to all `await` calls.
+
 #### 1.4.3 (2020-03-27)
 
 - Added a timed out response for when a `TaskCancelledException` is thrown when the HttpClient times out.

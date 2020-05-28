@@ -16,7 +16,7 @@ namespace Arex388.Geocodio {
         /// <summary>
         /// Was the request successful or not.
         /// </summary>
-        public virtual bool Success { get; }
+        public abstract bool Success { get; }
 
         /// <summary>
         /// An invalid response instance with an optional error message.
