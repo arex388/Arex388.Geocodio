@@ -16,5 +16,6 @@ namespace Arex388.Geocodio {
 		public StateDistricts StateDistricts { get; set; }
 
 		public TimeZone TimeZone { get; set; }
-	}
+        public Zip4 Zip4 { get; set; }
+    }
 }

@@ -1,3 +1,8 @@
+#### 1.5.0 (2020-07-04)
+
+- Updated to target v1.5 of the API.
+- Added Zip4 data append field and models.
+
 #### 1.4.5 (2020-05-27)
 
 - Internal code clean up.
