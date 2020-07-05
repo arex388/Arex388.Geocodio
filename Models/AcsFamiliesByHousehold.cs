@@ -15,22 +15,22 @@ namespace Arex388.Geocodio {
 		public AcsPair FamilyMarried { get; set; }
 
 		/// <summary>
-		/// Other family
+		/// Family households: Other family
 		/// </summary>
-		[JsonProperty("Other family")]
+		[JsonProperty("Family households: Other family")]
 		public AcsPair FamilyOther { get; set; }
 
 		/// <summary>
-		/// Other family: Male householder, no wife present
+		/// Family households: Other family: Female householder, no husband present
 		/// </summary>
-		[JsonProperty("Other family: Male householder, no wife present")]
-		public AcsPair FamilyOtherMaleNoWife { get; set; }
+		[JsonProperty("Family households: Other family: Female householder, no husband present")]
+		public AcsPair FamilyOtherFemaleNoHusband { get; set; }
 
 		/// <summary>
-		/// Other family: Female householder, no husband present
+		/// Family households: Other family: Male householder, no wife present
 		/// </summary>
-		[JsonProperty("Other family: Female householder, no husband present")]
-		public AcsPair FamilyOtherFemaleNoHusband { get; set; }
+		[JsonProperty("Family households: Other family: Male householder, no wife present")]
+		public AcsPair FamilyOtherMaleNoWife { get; set; }
 
 		public AcsDataMeta Meta { get; set; }
 

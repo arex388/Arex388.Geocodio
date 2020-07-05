@@ -1,3 +1,8 @@
+#### 1.6.0 (2020-07-04)
+
+- Updated to target v1.6 of the API.
+- Matched API corrections for ACS results. This introduced breaking changes due to renaming of properties.
+
 #### 1.5.0 (2020-07-04)
 
 - Updated to target v1.5 of the API.

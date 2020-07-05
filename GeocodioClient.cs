@@ -192,7 +192,7 @@ namespace Arex388.Geocodio {
 
         private async Task<string> GetResponseAsync(
             RequestBase request) {
-            var endpoint = $"https://api.geocod.io/v1.5/{request.Endpoint}&api_key={_key}";
+            var endpoint = $"https://api.geocod.io/v1.6/{request.Endpoint}&api_key={_key}";
 
             try {
                 if (request.Method == HttpMethod.Get) {

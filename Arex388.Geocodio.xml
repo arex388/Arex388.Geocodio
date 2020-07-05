@@ -583,17 +583,17 @@
         </member>
         <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyOther">
             <summary>
-            Other family
-            </summary>
-        </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyOtherMaleNoWife">
-            <summary>
-            Other family: Male householder, no wife present
+            Family households: Other family
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyOtherFemaleNoHusband">
             <summary>
-            Other family: Female householder, no husband present
+            Family households: Other family: Female householder, no husband present
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.FamilyOtherMaleNoWife">
+            <summary>
+            Family households: Other family: Male householder, no wife present
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsFamiliesByHousehold.NonFamily">
@@ -616,54 +616,104 @@
             In family households
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InMarriedFamily">
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMarried">
             <summary>
-            In married-couple family
+            In family households: In married-couple family
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InMarriedFamilyRelatives">
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMarriedRelatives">
             <summary>
-            In married-couple family: Relatives
+            In family households: In married-couple family: Relatives
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InMarriedFamilyNonRelatives">
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMarriedNonRelatives">
             <summary>
-            In married-couple family: Nonrelatives
-            </summary>
-        </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWife">
-            <summary>
-            In male householder, no wife present, family
-            </summary>
-        </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWifeRelatives">
-            <summary>
-            In male householder, no wife present, family: Relatives
-            </summary>
-        </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWifeNonRelatives">
-            <summary>
-            In male householder, no wife present, family: Nonrelatives
+            In family households: In married-couple family: Nonrelatives
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusband">
             <summary>
-            In female householder, no husband present, family
+            In family households: In female householder, no husband present, family
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusbandRelatives">
             <summary>
-            In female householder, no husband present, family: Relatives
+            In family households: In female householder, no husband present, family: Relatives
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusbandNonRelatives">
             <summary>
-            In female householder, no husband present, family: Nonrelatives
+            In family households: In female householder, no husband present, family: Nonrelatives
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyFemaleNoHusbandNonFamily">
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWife">
             <summary>
-            In female householder, no husband present, family: In nonfamily households
+            In family households: In male householder, no wife present, family
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWifeRelatives">
+            <summary>
+            In family households: In male householder, no wife present, family: Relatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InFamilyMaleNoWifeNonRelatives">
+            <summary>
+            In family households: In male householder, no wife present, family: Nonrelatives
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesByPopulation.InNonFamily">
+            <summary>
+            In nonfamily households
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.Female">
+            <summary>
+            Female
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNeverMarried">
+            <summary>
+            Female: Never married
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNowMarried">
+            <summary>
+            Female: Now married
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNowMarriedSpousePresent">
+            <summary>
+            Female: Now married: Married, spouse present
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNowMarriedSpouseAbsent">
+            <summary>
+            Female: Now married: Married, spouse absent
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNowMarriedSpouseAbsentSeparated">
+            <summary>
+            Female: Now married: Married, spouse absent: Separated
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNowMarriedSpouseAbsentOther">
+            <summary>
+            Female: Now married: Married, spouse absent: Other
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleWidowed">
+            <summary>
+            Female: Widowed
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleDivorced">
+            <summary>
+            Female: Divorced
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.Male">
+            <summary>
+            Male
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleNeverMarried">
@@ -671,44 +721,39 @@
             Male: Never married
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.NowMarried">
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleNowMarried">
             <summary>
-            Now married
+            Male: Now married
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.NowMarriedSpousePresent">
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleNowMarriedSpousePresent">
             <summary>
-            Now married: Married, spouse present
+            Male: Now married: Married, spouse present
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsent">
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleNowMarriedSpouseAbsent">
             <summary>
-            Married, spouse absent
+            Male: Now married: Married, spouse absent
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentSeparated">
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleNowMarriedSpouseAbsentSeparated">
             <summary>
-            Married, spouse absent: Separated
+            Male: Now married: Married, spouse absent: Separated
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentOther">
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleNowMarriedSpouseAbsentOther">
             <summary>
-            Married, spouse absent: Other
+            Male: Now married: Married, spouse absent: Other
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentWidowed">
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleWidowed">
             <summary>
-            Married, spouse absent: Widowed
+            Male: Widowed
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MarriedSpouseAbsentDivorced">
+        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.MaleDivorced">
             <summary>
-            Married, spouse absent: Divorced
-            </summary>
-        </member>
-        <member name="P:Arex388.Geocodio.AcsFamiliesMaritalStatus.FemaleNeverMarried">
-            <summary>
-            Female: Never married
+            Male: Divorced
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsHousing.Count">
@@ -1191,6 +1236,81 @@
             Female: Nonveteran
             </summary>
         </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female18To34">
+            <summary>
+            Female: 18 to 34 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female18To34Veteran">
+            <summary>
+            Female: 18 to 34 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female18To34NonVeteran">
+            <summary>
+            Female: 18 to 34 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female35To54">
+            <summary>
+            Female: 35 to 54 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female35To54Veteran">
+            <summary>
+            Female: 35 to 54 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female35To54NonVeteran">
+            <summary>
+            Female: 35 to 54 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female55To64">
+            <summary>
+            Female: 55 to 64 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female55To64Veteran">
+            <summary>
+            Female: 55 to 64 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female55To64NonVeteran">
+            <summary>
+            Female: 55 to 64 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female65To74">
+            <summary>
+            Female: 65 to 74 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female65To74Veteran">
+            <summary>
+            Female: 65 to 74 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female65To74NonVeteran">
+            <summary>
+            Female: 65 to 74 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female75Over">
+            <summary>
+            Female: 75 years and over
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female75OverVeteran">
+            <summary>
+            Female: 75 years and over: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Female75OverNonVeteran">
+            <summary>
+            Female: 75 years and over: Nonveteran
+            </summary>
+        </member>
         <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.MaleVeteran">
             <summary>
             Male: Veteran
@@ -1199,6 +1319,81 @@
         <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.MaleNonVeteran">
             <summary>
             Male: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male18To34">
+            <summary>
+            Male: 18 to 34 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male18To34Veteran">
+            <summary>
+            Male: 18 to 34 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male18To34NonVeteran">
+            <summary>
+            Male: 18 to 34 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male35To54">
+            <summary>
+            Male: 35 to 54 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male35To54Veteran">
+            <summary>
+            Male: 35 to 54 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male35To54NonVeteran">
+            <summary>
+            Male: 35 to 54 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male55To64">
+            <summary>
+            Male: 55 to 64 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male55To64Veteran">
+            <summary>
+            Male: 55 to 64 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male55To64NonVeteran">
+            <summary>
+            Male: 55 to 64 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male65To74">
+            <summary>
+            Male: 65 to 74 years
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male65To74Veteran">
+            <summary>
+            Male: 65 to 74 years: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male65To74NonVeteran">
+            <summary>
+            Male: 65 to 74 years: Nonveteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male75Over">
+            <summary>
+            Male: 75 years and over
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male75OverVeteran">
+            <summary>
+            Male: 75 years and over: Veteran
+            </summary>
+        </member>
+        <member name="P:Arex388.Geocodio.AcsSocialVeteranStatus.Male75OverNonVeteran">
+            <summary>
+            Male: 75 years and over: Nonveteran
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.Census.BlockCode">
