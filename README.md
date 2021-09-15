@@ -1,4 +1,4 @@
-﻿﻿# Arex388.Geocodio
+﻿# Arex388.Geocodio
 
 A C# client for the Geocod.io API.
 
