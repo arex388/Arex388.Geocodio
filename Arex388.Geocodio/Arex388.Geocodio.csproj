@@ -11,24 +11,22 @@
     <PackageProjectUrl>https://github.com/arex388/Arex388.Geocodio</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arex388/Arex388.Geocodio</RepositoryUrl>
     <PackageTags>geocodio geocod.io arex388</PackageTags>
-    <Version>1.6.0</Version>
+    <Version>1.6.1</Version>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DocumentationFile>E:\Software Development\Arex388.Geocodio\Arex388.Geocodio\Arex388.Geocodio.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DocumentationFile>E:\Software Development\Arex388\Arex388.Geocodio\Arex388.Geocodio.xml</DocumentationFile>
+    <DocumentationFile>E:\Software Development\Arex388.Geocodio\Arex388.Geocodio.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>

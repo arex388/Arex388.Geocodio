@@ -1,3 +1,16 @@
+#### 1.6.1 (2021-09-13)
+
+This update started with only one minor goal in time, which I don't even remember anymore, and then escalated into a rewrite of the entire client with lots of improvements.
+
+- **Added** - A `GetPointAsync` extension method to get only the most accurate latitude and longitude point of an address.
+- **Revised** - The internal implementation of `GeocodioClient` to be fully asynchronous and cancellable.
+- **Added** - An `IGeocodioClient` interface to use for dependency injection.
+- **Updated** - `AccuracyType` with improved descriptions.
+- **Revised** - All request and response objects to be better structured.
+- **Added** - A new `ResponseStatus` enum that better indicates the status of a response.
+- **Added** - A new `Arex388.Geocodio.Extensions.Microsoft.DependencyInjection` NuGet package to quickly and easily add the client to `IServiceCollection` for dependency injection.
+- **Added** - Basic unit tests so I don't have to use LINQPad for testing anymore.
+
 #### 1.6.0 (2020-07-04)
 
 - Updated to target v1.6 of the API.

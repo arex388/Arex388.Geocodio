@@ -4,146 +4,291 @@
         <name>Arex388.Geocodio</name>
     </assembly>
     <members>
-        <member name="F:Arex388.Geocodio.GeocodioClient.MaxBatchCount">
+        <member name="T:Arex388.Geocodio.GeocodioClientExtensions">
             <summary>
-            The maximum number of coordiantes allowed for a batch request.
+            Geocod.io API client extensions.
             </summary>
         </member>
-        <member name="F:Arex388.Geocodio.GeocodioClient._debug">
+        <member name="M:Arex388.Geocodio.GeocodioClientExtensions.GetPointAsync(Arex388.Geocodio.IGeocodioClient,System.String,System.Threading.CancellationToken)">
             <summary>
-            Is debugging enabled.
+            Get the most accurate latitude and longitude point of an address.
             </summary>
+            <param name="geocodio">The Geocodi.io API client instance.</param>
+            <param name="address">The address to geocode.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>Tupple of (latitude, longitude) as decimals.</returns>
         </member>
-        <member name="F:Arex388.Geocodio.GeocodioClient._httpClient">
+        <member name="T:Arex388.Geocodio.GeocodioClient">
             <summary>
-            An instance of HttpClient.
-            </summary>
-        </member>
-        <member name="F:Arex388.Geocodio.GeocodioClient._key">
-            <summary>
-            Your geocod.io API key.
+            Geocod.io API client. TEST
             </summary>
         </member>
         <member name="M:Arex388.Geocodio.GeocodioClient.#ctor(System.Net.Http.HttpClient,System.String,System.Boolean)">
             <summary>
-            Geocod.io API client.
+            Create an instance of the Geocod.io API client.
             </summary>
             <param name="httpClient">An instance of HttpClient.</param>
-            <param name="key">Your geocod.io API key.</param>
-            <param name="debug">Toggle capturing the raw JSON response from geocod.io and returning it as part of the deserialized response object.</param>
+            <param name="key">Your Geocod.io API key.</param>
+            <param name="debug">Toggle response debugging. Disabled by default.</param>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(System.String,System.String[])">
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Geocode an address.
+            </summary>
+            <param name="address">The address to geocode.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <summary>
             Geocode an address.
             </summary>
             <param name="address">The address to geocode.</param>
             <param name="fields">Optional fields to expand in the response.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(Arex388.Geocodio.GeocodeRequest)">
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeAsync(Arex388.Geocodio.GeocodeRequest,System.Threading.CancellationToken)">
             <summary>
             Geocode an address.
             </summary>
             <param name="request">A GeocodeRequest instance.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeBatchAsync(System.Collections.Generic.IList{System.String},System.String[])">
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Geocode a batch of addresses.
+            </summary>
+            <param name="addresses">The addresses to geocode.</param>
+            <param name="cancellationToken">The cancellation token/</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <summary>
             Geocode a batch of addresses.
             </summary>
             <param name="addresses">The addresses to geocode.</param>
             <param name="fields">Optional fields to expand in the response.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeBatchAsync(Arex388.Geocodio.GeocodeBatchRequest)">
+        <member name="M:Arex388.Geocodio.GeocodioClient.GeocodeBatchAsync(Arex388.Geocodio.GeocodeBatchRequest,System.Threading.CancellationToken)">
             <summary>
             Geocode a batch of addresses.
             </summary>
             <param name="request">A GeocodeRequest instance.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeAsync(System.String,System.String[])">
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Reverse geocode a coordinate.
             </summary>
-            <param name="location">The coordiante to reverse geocode.</param>
-            <param name="fields">Optional fields to expand in the response.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="coordinates">The coordinate to reverse geocode.</param>
+            <param name="cancellationToken">The cancellation token/</param>
+            <returns>GeocodeResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeAsync(Arex388.Geocodio.ReverseGeocodeRequest)">
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a coordinate.
+            </summary>
+            <param name="coordinates">The coordinate to reverse geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeAsync(Arex388.Geocodio.ReverseGeocodeRequest,System.Threading.CancellationToken)">
             <summary>
             Reverse geocode a coordinate.
             </summary>
             <param name="request">A GeocodeRequest instance.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeBatchAsync(System.Collections.Generic.IList{System.String},System.String[])">
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a batch of coordinates.
+            </summary>
+            <param name="coordiantes">The coordinates to reverse geocode.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
             <summary>
             Reverse geocode a batch of coordinates.
             </summary>
             <param name="coordinates">The coordinates to reverse geocode.</param>
             <param name="fields">Optional fields to expand in the response.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeBatchAsync(Arex388.Geocodio.ReverseGeocodeBatchRequest)">
+        <member name="M:Arex388.Geocodio.GeocodioClient.ReverseGeocodeBatchAsync(Arex388.Geocodio.ReverseGeocodeBatchRequest,System.Threading.CancellationToken)">
             <summary>
             Reverse geocode a batch of coordinates.
             </summary>
             <param name="request">A GeocodeRequest instance.</param>
-            <returns>A GeocodeResponse.</returns>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.InvalidBatchCountResponse``1">
+        <member name="T:Arex388.Geocodio.IGeocodioClient">
             <summary>
-            A failure due to over max number of allowed coordiantes per request.
+            Geocod.io API client.
             </summary>
-            <typeparam name="T">The response type.</typeparam>
-            <returns>The response.</returns>
         </member>
-        <member name="M:Arex388.Geocodio.GeocodioClient.NullRequestResponse``1">
+        <member name="M:Arex388.Geocodio.IGeocodioClient.GeocodeAsync(System.String,System.Threading.CancellationToken)">
             <summary>
-            A failure due to a null request.
+            Geocode an address.
             </summary>
-            <typeparam name="T">The response type.</typeparam>
-            <returns>T</returns>
+            <param name="address">The address to geocode.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.GeocodeAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Geocode an address.
+            </summary>
+            <param name="address">The address to geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.GeocodeAsync(Arex388.Geocodio.GeocodeRequest,System.Threading.CancellationToken)">
+            <summary>
+            Geocode an address.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.GeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Geocode a batch of addresses.
+            </summary>
+            <param name="addresses">The addresses to geocode.</param>
+            <param name="cancellationToken">The cancellation token/</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.GeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Geocode a batch of addresses.
+            </summary>
+            <param name="addresses">The addresses to geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.GeocodeBatchAsync(Arex388.Geocodio.GeocodeBatchRequest,System.Threading.CancellationToken)">
+            <summary>
+            Geocode a batch of addresses.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.ReverseGeocodeAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a coordinate.
+            </summary>
+            <param name="coordinates">The coordinate to reverse geocode.</param>
+            <param name="cancellationToken">The cancellation token/</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.ReverseGeocodeAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a coordinate.
+            </summary>
+            <param name="coordinates">The coordinate to reverse geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.ReverseGeocodeAsync(Arex388.Geocodio.ReverseGeocodeRequest,System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a coordinate.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.ReverseGeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a batch of coordinates.
+            </summary>
+            <param name="coordiantes">The coordinates to reverse geocode.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.ReverseGeocodeBatchAsync(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a batch of coordinates.
+            </summary>
+            <param name="coordinates">The coordinates to reverse geocode.</param>
+            <param name="fields">Optional fields to expand in the response.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="M:Arex388.Geocodio.IGeocodioClient.ReverseGeocodeBatchAsync(Arex388.Geocodio.ReverseGeocodeBatchRequest,System.Threading.CancellationToken)">
+            <summary>
+            Reverse geocode a batch of coordinates.
+            </summary>
+            <param name="request">A GeocodeRequest instance.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>GeocodeBatchResponse</returns>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.County">
+            <summary>
+            The point is a county centroid.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.Intersection">
+            <summary>
+            The result is an intersection between two streets.
+            </summary>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.NearestPlace">
             <summary>
-            Closest city/town/place
+            Closest city/town/place.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.AccuracyType.NearestRooftopMatch">
+            <summary>
+            The exact house number was not found, so a close, neighboring house number was used instead.
             </summary>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.NearestStreet">
             <summary>
-            Nearest match for a specific street with estimated street number
+            Nearest match for a specific street with estimated street number.
             </summary>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.Place">
             <summary>
-            The point is a city/town/place
+            The point is a city/town/place zip code centroid.
             </summary>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.Point">
             <summary>
-            We found the exact point from address range interpolation where the range contained a single point
+            The exact point was found from address range interpolation where the range contained a single point.
             </summary>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.RangeInterpolation">
             <summary>
-            We found the exact point by performing address range interpolation
+            The point was found by performing address range interpolation.
             </summary>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.Rooftop">
             <summary>
-            We found the exact point with rooftop level accuracy
+            The exact point was found with rooftop level accuracy.
             </summary>
         </member>
         <member name="F:Arex388.Geocodio.AccuracyType.State">
             <summary>
-            The point is a state
+            The point is a state centroid.
             </summary>
         </member>
-        <member name="F:Arex388.Geocodio.AccuracyType.StreetCenter">
+        <member name="F:Arex388.Geocodio.AccuracyType.Street">
             <summary>
-            The result is a geocoded street centroid
+            The result is a geocoded street centroid.
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.AcsDemographicsPopulationByAge.Female5YearsUnder">
@@ -1462,28 +1607,65 @@
             and changed to a collection in v1.2.
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.ResponseBase.Error">
+        <member name="T:Arex388.Geocodio.RequestBase">
             <summary>
-            The error message if the response failed.
+            Request base.
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.ResponseBase.Json">
+        <member name="T:Arex388.Geocodio.ResponseBase">
             <summary>
-            The raw JSON of the response for debugging.
+            Response base.
             </summary>
         </member>
-        <member name="P:Arex388.Geocodio.ResponseBase.Success">
+        <member name="P:Arex388.Geocodio.ResponseBase.ResponseError">
             <summary>
-            Was the request successful or not.
+            The response error if the request failed.
             </summary>
         </member>
-        <member name="M:Arex388.Geocodio.ResponseBase.Invalid``1(System.String)">
+        <member name="P:Arex388.Geocodio.ResponseBase.ResponseJson">
             <summary>
-            An invalid response instance with an optional error message.
+            The response JSON if debugging is enabled.
             </summary>
-            <typeparam name="T">The response type.</typeparam>
-            <param name="error">The error message (optional).</param>
-            <returns>T</returns>
+        </member>
+        <member name="P:Arex388.Geocodio.ResponseBase.ResponseStatus">
+            <summary>
+            The response status.
+            </summary>
+        </member>
+        <member name="T:Arex388.Geocodio.ResponseStatus">
+            <summary>
+            Response status.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.ResponseStatus.Cancelled">
+            <summary>
+            The request was cancelled.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.ResponseStatus.Failure">
+            <summary>
+            The request failed.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.ResponseStatus.Invalid">
+            <summary>
+            The request is invalid.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.ResponseStatus.InvalidBatchSize">
+            <summary>
+            The request's batch size is invalid.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.ResponseStatus.Success">
+            <summary>
+            The request succeeded.
+            </summary>
+        </member>
+        <member name="F:Arex388.Geocodio.ResponseStatus.TimeOut">
+            <summary>
+            The request timed out.
+            </summary>
         </member>
     </members>
 </doc>
