@@ -6,7 +6,7 @@
     <members>
         <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddGeocodio(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
             <summary>
-            Add Geocod.io API client as a singleton. TEST
+            Add Geocod.io API client as a singleton.
             </summary>
             <param name="services">The service collection.</param>
             <param name="key">Your Geocod.io API key.</param>

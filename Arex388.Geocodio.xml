@@ -1609,12 +1609,12 @@
         </member>
         <member name="T:Arex388.Geocodio.RequestBase">
             <summary>
-            Request base.
+            The request base.
             </summary>
         </member>
         <member name="T:Arex388.Geocodio.ResponseBase">
             <summary>
-            Response base.
+            The response base.
             </summary>
         </member>
         <member name="P:Arex388.Geocodio.ResponseBase.ResponseError">
@@ -1634,7 +1634,7 @@
         </member>
         <member name="T:Arex388.Geocodio.ResponseStatus">
             <summary>
-            Response status.
+            The response status.
             </summary>
         </member>
         <member name="F:Arex388.Geocodio.ResponseStatus.Cancelled">
