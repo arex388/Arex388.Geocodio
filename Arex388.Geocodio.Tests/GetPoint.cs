@@ -4,24 +4,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Arex388.Geocodio.Tests {
-    public sealed class GetPoint {
-        private readonly IGeocodioClient _geocodio;
+namespace Arex388.Geocodio.Tests; 
 
-        public GetPoint() {
-            var configuration = new ConfigurationBuilder().AddUserSecrets<GetPoint>().Build();
-            var key = configuration["GeocodioKey"];
+public sealed class GetPoint {
+    private readonly IGeocodioClient _geocodio;
 
-            _geocodio = new GeocodioClient(new HttpClient(), key, true);
-        }
+    public GetPoint() {
+        var configuration = new ConfigurationBuilder().AddUserSecrets<GetPoint>().Build();
+        var key = configuration["GeocodioKey"];
 
-        [Fact]
-        public async Task GetAsync() {
-            var response = await _geocodio.GetPointAsync("1600 Pennsylvania Ave NW, Washington, DC 20500", CancellationToken.None).ConfigureAwait(false);
+        _geocodio = new GeocodioClient(new HttpClient(), key, true);
+    }
 
-            Assert.True(response.HasValue);
-            Assert.Equal(38.897675M, response!.Value.latitude);
-            Assert.Equal(-77.036547M, response.Value.longitude);
-        }
+    [Fact]
+    public async Task GetAsync() {
+        var response = await _geocodio.GetPointAsync("1600 Pennsylvania Ave NW, Washington, DC 20500", CancellationToken.None).ConfigureAwait(false);
+
+        Assert.True(response.HasValue);
+        Assert.Equal(38.897675M, response!.Value.latitude);
+        Assert.Equal(-77.036547M, response.Value.longitude);
     }
 }

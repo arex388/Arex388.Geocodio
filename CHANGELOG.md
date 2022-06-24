@@ -1,3 +1,7 @@
+#### 1.6.1 (2022-06-23)
+
+- Minor code cleanup.
+
 #### 1.6.1 (2021-09-13)
 
 This update started with only one minor goal in time, which I don't even remember anymore, and then escalated into a rewrite of the entire client with lots of improvements.

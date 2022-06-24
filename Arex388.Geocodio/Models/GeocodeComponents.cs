@@ -1,26 +1,26 @@
 ﻿using Newtonsoft.Json;
 
-namespace Arex388.Geocodio {
-    public sealed class GeocodeComponents {
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string County { get; set; }
+namespace Arex388.Geocodio; 
 
-        [JsonProperty("formatted_street")]
-        public string FormattedStreet { get; set; }
+public sealed class GeocodeComponents {
+    public string City { get; set; }
+    public string Country { get; set; }
+    public string County { get; set; }
 
-        public string Number { get; set; }
+    [JsonProperty("formatted_street")]
+    public string FormattedStreet { get; set; }
 
-        [JsonProperty("zip")]
-        public string PostalCode { get; set; }
+    public string Number { get; set; }
 
-        public string PostDirectional { get; set; }
-        public string PreDirectional { get; set; }
-        public string Prefix { get; set; }
-        public string SecondaryNumber { get; set; }
-        public string SecondaryUnit { get; set; }
-        public string State { get; set; }
-        public string Street { get; set; }
-        public string Suffix { get; set; }
-    }
+    [JsonProperty("zip")]
+    public string PostalCode { get; set; }
+
+    public string PostDirectional { get; set; }
+    public string PreDirectional { get; set; }
+    public string Prefix { get; set; }
+    public string SecondaryNumber { get; set; }
+    public string SecondaryUnit { get; set; }
+    public string State { get; set; }
+    public string Street { get; set; }
+    public string Suffix { get; set; }
 }
