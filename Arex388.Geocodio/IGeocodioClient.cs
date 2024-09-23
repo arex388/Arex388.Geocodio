@@ -1,4 +1,6 @@
-﻿namespace Arex388.Geocodio;
+﻿// ReSharper disable UnusedMemberInSuper.Global
+
+namespace Arex388.Geocodio;
 
 /// <summary>
 /// Geocod.io API client.

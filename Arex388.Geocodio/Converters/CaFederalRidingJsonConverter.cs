@@ -5,7 +5,7 @@ namespace Arex388.Geocodio.Converters;
 
 internal sealed class CaFederalRidingJsonConverter :
 	JsonConverter<CaFederalRiding> {
-	public override CaFederalRiding? Read(
+	public override CaFederalRiding Read(
 		ref Utf8JsonReader reader,
 		Type typeToConvert,
 		JsonSerializerOptions options) {

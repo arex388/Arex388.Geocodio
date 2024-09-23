@@ -2,6 +2,13 @@
 
 
 
+#### 2.0.1 (2024-09-23)
+
+- **Changed:** Presumably enabled Source Link.
+- Minor cleanup and refactoring.
+
+
+
 #### 2.0.0 (2024-09-21)
 
 This update is a complete rewrite of the whole library. **LOTs** of breaking changes, but for the better, in my opinion. Overall the library should be more stable, more performant and easier to use both for requesting and for reading the responses.

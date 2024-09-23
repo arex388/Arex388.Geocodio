@@ -5,7 +5,7 @@ namespace Arex388.Geocodio.Converters;
 
 internal sealed class UsAcsStatusJsonConverter :
 	JsonConverter<UsAcsStatus> {
-	public override UsAcsStatus? Read(
+	public override UsAcsStatus Read(
 		ref Utf8JsonReader reader,
 		Type typeToConvert,
 		JsonSerializerOptions options) {

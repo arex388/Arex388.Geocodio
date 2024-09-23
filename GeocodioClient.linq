@@ -13,7 +13,7 @@ private static readonly GeocodioClientOptions _options = new GeocodioClientOptio
 
 async Task Main() {
 	//var geocodio = GetClientMultiple();
-	//var geocodio = GetClientSingle();
+	var geocodio = GetClientSingle();
 }
 
 public IGeocodioClient GetClientMultiple() {
