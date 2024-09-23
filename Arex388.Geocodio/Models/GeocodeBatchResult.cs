@@ -1,6 +1,19 @@
-﻿namespace Arex388.Geocodio; 
+﻿using System.Text.Json.Serialization;
 
+namespace Arex388.Geocodio;
+
+/// <summary>
+/// The geocode or reverse geocode batch result.
+/// </summary>
 public sealed class GeocodeBatchResult {
-    public string Query { get; set; }
-    public GeocodeResponse Response { get; set; }
+	/// <summary>
+	/// The address being geocoded.
+	/// </summary>
+	[JsonPropertyName("query")]
+	public string Address { get; init; } = null!;
+
+	/// <summary>
+	/// The results.
+	/// </summary>
+	public IList<GeocodeResult> Results { get; init; } = [];
 }

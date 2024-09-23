@@ -1,325 +1,211 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Arex388.Geocodio.Converters;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace Arex388.Geocodio;
 
-/// <summary>
-/// Geocod.io API client. TEST
-/// </summary>
-public sealed class GeocodioClient :
-    IGeocodioClient {
-    private const int MaxBatchSize = 10000;
+internal sealed class GeocodioClient(
+	IServiceProvider services,
+	HttpClient? httpClient = null,
+	GeocodioClientOptions? options = null) :
+	IGeocodioClient {
+	private static readonly JsonSerializerOptions _jsonSerializerOptions = new() {
+		Converters = {
+			new AccuracyTypeJsonConverter(),
+			new CaCensusAreaJsonConverter(),
+			new CaFederalRidingJsonConverter(),
+			new FieldsJsonConverter(),
+			new GenderTypeJsonConverter(),
+			new GeocodeBatchResultJsonConverter(),
+			new UsAcsJsonConverter(),
+			new UsAcsStatusJsonConverter(),
+			new UsCensusAreaTypeJsonConverter(),
+			new UsCongressionalLegislatorTypeJsonConverter(),
+			new UsZip4FacilityTypeJsonConverter(),
+			new UsZip4GovernmentBuidlingTypeJsonConverter(),
+			new UsZip4RecordTypeJsonConverter()
+		},
+		PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+	};
 
-    private readonly bool _debug;
-    private readonly HttpClient _httpClient;
-    private readonly string _key;
+	private readonly IValidator<GeocodeMany.Request> _geocodeBatchValidator = services.GetRequiredService<IValidator<GeocodeMany.Request>>();
+	private readonly IValidator<Geocode.Request> _geocodeValidator = services.GetRequiredService<IValidator<Geocode.Request>>();
+	private readonly HttpClient _httpClient = httpClient ?? services.GetRequiredService<IHttpClientFactory>().CreateClient(nameof(IGeocodioClient));
+	private readonly GeocodioClientOptions _options = options ?? services.GetRequiredService<GeocodioClientOptions>();
+	private readonly IValidator<ReverseGeocodeMany.Request> _reverseGeocodeBatchValidator = services.GetRequiredService<IValidator<ReverseGeocodeMany.Request>>();
+	private readonly IValidator<ReverseGeocode.Request> _reverseGeocodeValidator = services.GetRequiredService<IValidator<ReverseGeocode.Request>>();
 
-    /// <summary>
-    /// Create an instance of the Geocod.io API client.
-    /// </summary>
-    /// <param name="httpClient">An instance of HttpClient.</param>
-    /// <param name="key">Your Geocod.io API key.</param>
-    /// <param name="debug">Toggle response debugging. Disabled by default.</param>
-    public GeocodioClient(
-        HttpClient httpClient,
-        string key,
-        bool debug = false) {
-        _debug = debug;
-        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        _key = key ?? throw new ArgumentNullException(nameof(key));
-    }
+	/// <inheritdoc />
+	public Task<Geocode.Response> GeocodeAsync(
+		string address,
+		bool mostAccurate = true,
+		CancellationToken cancellationToken = default) => GeocodeAsync(new Geocode.Request {
+			Address = address,
+			Take = mostAccurate
+				? 1
+				: null
+		}, cancellationToken);
 
-    /// <summary>
-    /// Geocode an address.
-    /// </summary>
-    /// <param name="address">The address to geocode.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeResponse</returns>
-    public async Task<GeocodeResponse> GeocodeAsync(
-        string address,
-        CancellationToken cancellationToken = default) => await GeocodeAsync(address, Enumerable.Empty<string>(), cancellationToken).ConfigureAwait(false);
+	/// <inheritdoc />
+	public async Task<Geocode.Response> GeocodeAsync(
+		Geocode.Request request,
+		CancellationToken cancellationToken = default) {
+		if (cancellationToken.IsSupportedAndCancelled()) {
+			return Geocode.Response.Cancelled;
+		}
 
-    /// <summary>
-    /// Geocode an address.
-    /// </summary>
-    /// <param name="address">The address to geocode.</param>
-    /// <param name="fields">Optional fields to expand in the response.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeResponse</returns>
-    public async Task<GeocodeResponse> GeocodeAsync(
-        string address,
-        IEnumerable<string> fields,
-        CancellationToken cancellationToken = default) => await GeocodeAsync(new GeocodeRequest {
-            Address = address,
-            Fields = fields
-        }, cancellationToken).ConfigureAwait(false);
+		// ReSharper disable once MethodHasAsyncOverloadWithCancellation
+		var validationResult = _geocodeValidator.Validate(request);
 
-    /// <summary>
-    /// Geocode an address.
-    /// </summary>
-    /// <param name="request">A GeocodeRequest instance.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeResponse</returns>
-    public async Task<GeocodeResponse> GeocodeAsync(
-        GeocodeRequest request,
-        CancellationToken cancellationToken = default) {
-        if (request is null) {
-            return InvalidResponse<GeocodeResponse>();
-        }
+		if (!validationResult.IsValid) {
+			return Geocode.Response.Invalid(validationResult);
+		}
 
-        if (cancellationToken.IsCancellationRequested) {
-            return CancelledResponse<GeocodeResponse>();
-        }
+		try {
+			var response = await _httpClient.GetAsync(request.GetEndpoint(_options), cancellationToken).ConfigureAwait(false);
+			var geocode = await response.Content.ReadFromJsonAsync<Geocode.Response>(_jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
 
-        return await RequestAsync<GeocodeResponse>(request, cancellationToken).ConfigureAwait(false);
-    }
+			geocode!.Errors = geocode.Error.HasValue()
+				? [geocode.Error!]
+				: [];
 
-    /// <summary>
-    /// Geocode a batch of addresses.
-    /// </summary>
-    /// <param name="addresses">The addresses to geocode.</param>
-    /// <param name="cancellationToken">The cancellation token/</param>
-    /// <returns>GeocodeBatchResponse</returns>
-    public async Task<GeocodeBatchResponse> GeocodeBatchAsync(
-        IEnumerable<string> addresses,
-        CancellationToken cancellationToken) => await GeocodeBatchAsync(addresses, Enumerable.Empty<string>(), cancellationToken).ConfigureAwait(false);
+			return geocode;
+		} catch {
+			return Geocode.Response.Failed;
+		}
+	}
 
-    /// <summary>
-    /// Geocode a batch of addresses.
-    /// </summary>
-    /// <param name="addresses">The addresses to geocode.</param>
-    /// <param name="fields">Optional fields to expand in the response.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeBatchResponse</returns>
-    public async Task<GeocodeBatchResponse> GeocodeBatchAsync(
-        IEnumerable<string> addresses,
-        IEnumerable<string> fields,
-        CancellationToken cancellationToken = default) => await GeocodeBatchAsync(new GeocodeBatchRequest {
-            Addresses = addresses,
-            Fields = fields
-        }, cancellationToken).ConfigureAwait(false);
+	/// <inheritdoc />
+	public Task<GeocodeMany.Response> GeocodeManyAsync(
+		IList<string> addresses,
+		bool mostAccurate = true,
+		CancellationToken cancellationToken = default) => GeocodeManyAsync(new GeocodeMany.Request {
+			Addresses = addresses,
+			Take = mostAccurate
+				? 1
+				: null
+		}, cancellationToken);
 
-    /// <summary>
-    /// Geocode a batch of addresses.
-    /// </summary>
-    /// <param name="request">A GeocodeRequest instance.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeBatchResponse</returns>
-    public async Task<GeocodeBatchResponse> GeocodeBatchAsync(
-        GeocodeBatchRequest request,
-        CancellationToken cancellationToken = default) {
-        if (request is null) {
-            return InvalidResponse<GeocodeBatchResponse>();
-        }
+	/// <inheritdoc />
+	public async Task<GeocodeMany.Response> GeocodeManyAsync(
+		GeocodeMany.Request request,
+		CancellationToken cancellationToken = default) {
+		if (cancellationToken.IsSupportedAndCancelled()) {
+			return GeocodeMany.Response.Cancelled;
+		}
 
-        if (request.Addresses.Count() > MaxBatchSize) {
-            return InvalidBatchSizeResponse<GeocodeBatchResponse>();
-        }
+		// ReSharper disable once MethodHasAsyncOverloadWithCancellation
+		var validationResult = _geocodeBatchValidator.Validate(request);
 
-        if (cancellationToken.IsCancellationRequested) {
-            return CancelledResponse<GeocodeBatchResponse>();
-        }
+		if (!validationResult.IsValid) {
+			return GeocodeMany.Response.Invalid(validationResult);
+		}
 
-        return await RequestAsync<GeocodeBatchResponse>(request, cancellationToken).ConfigureAwait(false);
-    }
+		try {
+			var response = await _httpClient.PostAsJsonAsync(request.GetEndpoint(_options), request.Addresses, _jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
+			var geocodes = await response.Content.ReadFromJsonAsync<GeocodeMany.Response>(_jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
 
-    /// <summary>
-    /// Reverse geocode a coordinate.
-    /// </summary>
-    /// <param name="coordinates">The coordinate to reverse geocode.</param>
-    /// <param name="cancellationToken">The cancellation token/</param>
-    /// <returns>GeocodeResponse</returns>
-    public async Task<GeocodeResponse> ReverseGeocodeAsync(
-        string coordinates,
-        CancellationToken cancellationToken) => await ReverseGeocodeAsync(coordinates, Enumerable.Empty<string>(), cancellationToken).ConfigureAwait(false);
+			geocodes!.Errors = geocodes.Error.HasValue()
+				? [geocodes.Error!]
+				: [];
 
-    /// <summary>
-    /// Reverse geocode a coordinate.
-    /// </summary>
-    /// <param name="coordinates">The coordinate to reverse geocode.</param>
-    /// <param name="fields">Optional fields to expand in the response.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeResponse</returns>
-    public async Task<GeocodeResponse> ReverseGeocodeAsync(
-        string coordinates,
-        IEnumerable<string> fields,
-        CancellationToken cancellationToken = default) => await ReverseGeocodeAsync(new ReverseGeocodeRequest {
-            Fields = fields,
-            Coordinates = coordinates
-        }, cancellationToken).ConfigureAwait(false);
+			return geocodes;
+		} catch {
+			return GeocodeMany.Response.Failed;
+		}
+	}
 
-    /// <summary>
-    /// Reverse geocode a coordinate.
-    /// </summary>
-    /// <param name="request">A GeocodeRequest instance.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeResponse</returns>
-    public async Task<GeocodeResponse> ReverseGeocodeAsync(
-        ReverseGeocodeRequest request,
-        CancellationToken cancellationToken = default) {
-        if (request is null) {
-            return InvalidResponse<GeocodeResponse>();
-        }
+	/// <inheritdoc />
+	public Task<ReverseGeocode.Response> ReverseGeocodeAsync(
+		decimal latitude,
+		decimal longitude,
+		bool mostAccurate = true,
+		CancellationToken cancellationToken = default) => ReverseGeocodeAsync(new ReverseGeocode.Request {
+			Point = $"{latitude},{longitude}",
+			Take = mostAccurate
+				? 1
+				: null
+		}, cancellationToken);
 
-        if (cancellationToken.IsCancellationRequested) {
-            return CancelledResponse<GeocodeResponse>();
-        }
+	/// <inheritdoc />
+	public Task<ReverseGeocode.Response> ReverseGeocodeAsync(
+		string point,
+		bool mostAccurate = true,
+		CancellationToken cancellationToken = default) => ReverseGeocodeAsync(new ReverseGeocode.Request {
+			Point = point,
+			Take = mostAccurate
+				? 1
+				: null
+		}, cancellationToken);
 
-        return await RequestAsync<GeocodeResponse>(request, cancellationToken).ConfigureAwait(false);
-    }
+	/// <inheritdoc />
+	public async Task<ReverseGeocode.Response> ReverseGeocodeAsync(
+		ReverseGeocode.Request request,
+		CancellationToken cancellationToken = default) {
+		if (cancellationToken.IsSupportedAndCancelled()) {
+			return ReverseGeocode.Response.Cancelled;
+		}
 
-    /// <summary>
-    /// Reverse geocode a batch of coordinates.
-    /// </summary>
-    /// <param name="coordiantes">The coordinates to reverse geocode.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeBatchResponse</returns>
-    public async Task<GeocodeBatchResponse> ReverseGeocodeBatchAsync(
-        IEnumerable<string> coordiantes,
-        CancellationToken cancellationToken) => await ReverseGeocodeBatchAsync(coordiantes, Enumerable.Empty<string>(), cancellationToken).ConfigureAwait(false);
+		// ReSharper disable once MethodHasAsyncOverloadWithCancellation
+		var validationResult = _reverseGeocodeValidator.Validate(request);
 
-    /// <summary>
-    /// Reverse geocode a batch of coordinates.
-    /// </summary>
-    /// <param name="coordinates">The coordinates to reverse geocode.</param>
-    /// <param name="fields">Optional fields to expand in the response.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeBatchResponse</returns>
-    public async Task<GeocodeBatchResponse> ReverseGeocodeBatchAsync(
-        IEnumerable<string> coordinates,
-        IEnumerable<string> fields,
-        CancellationToken cancellationToken = default) => await ReverseGeocodeBatchAsync(new ReverseGeocodeBatchRequest {
-            Coordinates = coordinates,
-            Fields = fields
-        }, cancellationToken).ConfigureAwait(false);
+		if (!validationResult.IsValid) {
+			return ReverseGeocode.Response.Invalid(validationResult);
+		}
 
-    /// <summary>
-    /// Reverse geocode a batch of coordinates.
-    /// </summary>
-    /// <param name="request">A GeocodeRequest instance.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>GeocodeBatchResponse</returns>
-    public async Task<GeocodeBatchResponse> ReverseGeocodeBatchAsync(
-        ReverseGeocodeBatchRequest request,
-        CancellationToken cancellationToken = default) {
-        if (request is null) {
-            return InvalidResponse<GeocodeBatchResponse>();
-        }
+		try {
+			var response = await _httpClient.GetAsync(request.GetEndpoint(_options), cancellationToken).ConfigureAwait(false);
+			var reverseGeocode = await response.Content.ReadFromJsonAsync<ReverseGeocode.Response>(_jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
 
-        if (request.Coordinates.Count() > MaxBatchSize) {
-            return InvalidBatchSizeResponse<GeocodeBatchResponse>();
-        }
+			reverseGeocode!.Errors = reverseGeocode.Error.HasValue()
+				? [reverseGeocode.Error!]
+				: [];
 
-        if (cancellationToken.IsCancellationRequested) {
-            return CancelledResponse<GeocodeBatchResponse>();
-        }
+			return reverseGeocode;
+		} catch {
+			return ReverseGeocode.Response.Failed;
+		}
+	}
 
-        return await RequestAsync<GeocodeBatchResponse>(request, cancellationToken).ConfigureAwait(false);
-    }
+	/// <inheritdoc />
+	public Task<ReverseGeocodeMany.Response> ReverseGeocodeManyAsync(
+		IList<string> points,
+		bool mostAccurate = true,
+		CancellationToken cancellationToken = default) => ReverseGeocodeManyAsync(new ReverseGeocodeMany.Request {
+			Points = points,
+			Take = mostAccurate
+				? 1
+				: null
+		}, cancellationToken);
 
-    //  ========================================================================
-    //  Response
-    //	========================================================================
+	/// <inheritdoc />
+	public async Task<ReverseGeocodeMany.Response> ReverseGeocodeManyAsync(
+		ReverseGeocodeMany.Request request,
+		CancellationToken cancellationToken = default) {
+		if (cancellationToken.IsSupportedAndCancelled()) {
+			return ReverseGeocodeMany.Response.Cancelled;
+		}
 
-    private T Deserialize<T>(
-        ResponseResult result)
-        where T : ResponseBase, new() {
-        var json = result.Json;
+		// ReSharper disable once MethodHasAsyncOverloadWithCancellation
+		var validationResult = _reverseGeocodeBatchValidator.Validate(request);
 
-        if (!json.HasValue()) {
-            return FailureResponse<T>();
-        }
+		if (!validationResult.IsValid) {
+			return ReverseGeocodeMany.Response.Invalid(validationResult);
+		}
 
-        var response = JsonConvert.DeserializeObject<T>(json);
+		try {
+			var response = await _httpClient.PostAsJsonAsync(request.GetEndpoint(_options), request.Points, _jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
+			var reverseGeocodes = await response.Content.ReadFromJsonAsync<ReverseGeocodeMany.Response>(_jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
 
-        if (response is null) {
-            return FailureResponse<T>();
-        }
+			reverseGeocodes!.Errors = reverseGeocodes.Error.HasValue()
+				? [reverseGeocodes.Error!]
+				: [];
 
-        response.ResponseJson = _debug
-            ? json
-            : null;
-        response.ResponseStatus = result.Success
-            ? ResponseStatus.Success
-            : ResponseStatus.Failure;
-
-        return response;
-    }
-
-    private async Task<HttpResponseMessage> GetAsync(
-        RequestBase request,
-        CancellationToken cancellationToken) => await _httpClient.GetAsync($"{request.EndpointWithPayload}&api_key={_key}", cancellationToken).ConfigureAwait(false);
-
-    private async Task<HttpResponseMessage> PostAsync(
-        RequestBase request,
-        CancellationToken cancellationToken) {
-        using var content = new StringContent(request.Body, Encoding.UTF8, "application/json");
-
-        return await _httpClient.PostAsync($"{request.EndpointWithPayload}&api_key={_key}", content, cancellationToken).ConfigureAwait(false);
-    }
-
-    private async Task<T> RequestAsync<T>(
-        RequestBase request,
-        CancellationToken cancellationToken)
-        where T : ResponseBase, new() {
-        if (cancellationToken.IsCancellationRequested) {
-            return CancelledResponse<T>();
-        }
-
-        try {
-            var response = request.Method == HttpMethod.Get
-                ? await GetAsync(request, cancellationToken).ConfigureAwait(false)
-                : await PostAsync(request, cancellationToken).ConfigureAwait(false);
-
-            var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var success = response.StatusCode == HttpStatusCode.OK;
-
-            return Deserialize<T>(new ResponseResult(json, success));
-        } catch (HttpRequestException) {
-            return FailureResponse<T>();
-        } catch (TaskCanceledException) {
-            return TimeOutResponse<T>();
-        }
-    }
-
-    //  ========================================================================
-    //  Utilities
-    //  ========================================================================
-
-    private static T CancelledResponse<T>()
-        where T : ResponseBase, new() => new() {
-            ResponseError = "The request was cancelled.",
-            ResponseStatus = ResponseStatus.Cancelled
-        };
-
-    private static T FailureResponse<T>()
-        where T : ResponseBase, new() => new() {
-            ResponseError = "The request failed.",
-            ResponseStatus = ResponseStatus.Failure
-        };
-
-    private static T InvalidResponse<T>()
-        where T : ResponseBase, new() => new() {
-            ResponseError = "The request is invalid.",
-            ResponseStatus = ResponseStatus.Invalid
-        };
-
-    private static T InvalidBatchSizeResponse<T>()
-        where T : ResponseBase, new() => new() {
-            ResponseError = $"The requests's batch size is invalid. The maximum batch size allowed is {MaxBatchSize}.",
-            ResponseStatus = ResponseStatus.InvalidBatchSize
-        };
-
-    private static T TimeOutResponse<T>()
-        where T : ResponseBase, new() => new() {
-            ResponseError = "The request timed out.",
-            ResponseStatus = ResponseStatus.TimeOut
-        };
+			return reverseGeocodes;
+		} catch {
+			return ReverseGeocodeMany.Response.Failed;
+		}
+	}
 }

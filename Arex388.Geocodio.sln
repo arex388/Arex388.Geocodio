@@ -1,20 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arex388.Geocodio", "Arex388.Geocodio\Arex388.Geocodio.csproj", "{CFF3DBA3-1C13-416A-B853-FDFE5605C125}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arex388.Geocodio.Extensions.Microsoft.DependencyInjection", "Arex388.Geocodio.Extensions.Microsoft.DependencyInjection\Arex388.Geocodio.Extensions.Microsoft.DependencyInjection.csproj", "{97B4A6DF-7FC1-4EEE-917C-5504C70064AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arex388.Geocodio.Tests", "Arex388.Geocodio.Tests\Arex388.Geocodio.Tests.csproj", "{F76FDA3C-D973-4BD0-8EC5-363759AF4A62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4EB7D9F1-0FB8-4015-9B70-D024A69A9EBB}"
 	ProjectSection(SolutionItems) = preProject
+		BENCHMARKS.md = BENCHMARKS.md
 		CHANGELOG.md = CHANGELOG.md
+		Directory.Build.props = Directory.Build.props
+		GeocodioClient.linq = GeocodioClient.linq
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arex388.Geocodio.Benchmarks", "Arex388.Geocodio.Benchmarks\Arex388.Geocodio.Benchmarks.csproj", "{9B5DB908-0A1B-4479-8826-F1F79F820E06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,14 +29,14 @@ Global
 		{CFF3DBA3-1C13-416A-B853-FDFE5605C125}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFF3DBA3-1C13-416A-B853-FDFE5605C125}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFF3DBA3-1C13-416A-B853-FDFE5605C125}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97B4A6DF-7FC1-4EEE-917C-5504C70064AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97B4A6DF-7FC1-4EEE-917C-5504C70064AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97B4A6DF-7FC1-4EEE-917C-5504C70064AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97B4A6DF-7FC1-4EEE-917C-5504C70064AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F76FDA3C-D973-4BD0-8EC5-363759AF4A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F76FDA3C-D973-4BD0-8EC5-363759AF4A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F76FDA3C-D973-4BD0-8EC5-363759AF4A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F76FDA3C-D973-4BD0-8EC5-363759AF4A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B5DB908-0A1B-4479-8826-F1F79F820E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B5DB908-0A1B-4479-8826-F1F79F820E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B5DB908-0A1B-4479-8826-F1F79F820E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B5DB908-0A1B-4479-8826-F1F79F820E06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

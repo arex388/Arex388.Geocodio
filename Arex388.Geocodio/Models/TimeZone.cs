@@ -1,40 +1,34 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
-namespace Arex388.Geocodio; 
+namespace Arex388.Geocodio;
 
+/// <summary>
+/// Time zone details.
+/// </summary>
 public sealed class TimeZone {
-    public string Abbreviation { get; set; }
+	/// <summary>
+	/// The time zone's abbreviation.
+	/// </summary>
+	public string Abbreviation { get; init; } = null!;
 
-    [JsonProperty("observes_dst")]
-    public bool DstObserved { get; set; }
+	/// <summary>
+	/// The time zone's IANA id.
+	/// </summary>
+	[JsonPropertyName("name")]
+	public string IanaId { get; init; } = null!;
 
-    public string Name { get; set; }
-    public string Source { get; set; }
+	/// <summary>
+	/// Flag indicating if the time zone is currently in daylight savings.
+	/// </summary>
+	[JsonPropertyName("observes_dst")]
+	public bool IsDaylightSavings { get; init; }
 
-    [JsonProperty("utc_offset")]
-    public decimal UtcOffset { get; set; }
+	[JsonInclude, JsonPropertyName("utc_offset")]
+	internal double UtcOffsetRaw { get; init; }
 
-    public string UtcOffsetNormalized => NormalizeUtcOffset(UtcOffset);
-
-    private static readonly IDictionary<int, string> Signs = new Dictionary<int, string> {
-        { -1, "-" },
-        { 0, "+" },
-        { 1, "+" }
-    };
-
-    private static string NormalizeUtcOffset(
-        decimal utcOffset) {
-        var utcOffsetAbs = Math.Abs(utcOffset);
-        var utcOffsetSign = Math.Sign(utcOffset);
-
-        var remainder = utcOffsetAbs % 1;
-        var sign = Signs[utcOffsetSign];
-
-        var hours = (int)(utcOffsetAbs - remainder);
-        var minutes = (int)(remainder * 60);
-
-        return $"{sign}{hours:D2}:{minutes:D2}";
-    }
+	/// <summary>
+	/// The time zone's UTC offset.
+	/// </summary>
+	[JsonIgnore]
+	public TimeSpan UtcOffset => TimeSpan.FromHours(UtcOffsetRaw);
 }
