@@ -32,7 +32,7 @@ _ = await _geocodio.ReverseGeocodeAsync("The point to reverse geocode");
 
 
 
-For multiple accounts, use the `IGeocodioClientFactory` to create an instance per account.
+For multiple accounts, inject the `IGeocodioClientFactory` to create an instance per account.
 
 ```c#
 private readonly IGeocodioClientFactory _geocodioFactory;
