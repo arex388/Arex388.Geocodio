@@ -2,7 +2,7 @@
 
 > [!CAUTION]
 >
-> This README only refers to the v2.0.0 version of the library only.
+> This README refers to the v2.0.0 version of the library only.
 
 
 

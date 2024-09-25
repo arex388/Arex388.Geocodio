@@ -32,12 +32,12 @@ public sealed class GeocodioClientFactoryTests {
 			Key = Config.Key
 		});
 
+		_console.WriteLineWithHeader(nameof(created), created);
+		_console.WriteLineWithHeader(nameof(cached), cached);
+
 		//	========================================================================
 		//	Assert
 		//	========================================================================
-
-		_console.WriteLineWithHeader(nameof(created), created);
-		_console.WriteLineWithHeader(nameof(cached), cached);
 
 		created.Should().BeSameAs(cached);
 	}
@@ -59,12 +59,12 @@ public sealed class GeocodioClientFactoryTests {
 			Key = "asdf"
 		});
 
+		_console.WriteLineWithHeader(nameof(client1), client1);
+		_console.WriteLineWithHeader(nameof(client2), client2);
+
 		//	========================================================================
 		//	Assert
 		//	========================================================================
-
-		_console.WriteLineWithHeader(nameof(client1), client1);
-		_console.WriteLineWithHeader(nameof(client2), client2);
 
 		client1.Should().NotBeSameAs(client2);
 	}

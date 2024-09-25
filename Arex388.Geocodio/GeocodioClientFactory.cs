@@ -14,7 +14,6 @@ internal sealed class GeocodioClientFactory(
 	private readonly IServiceProvider _services = services;
 	private readonly IMemoryCache _cache = cache;
 
-	/// <inheritdoc />
 	public IGeocodioClient CreateClient(
 		GeocodioClientOptions options) {
 		var key = $"{nameof(Arex388)}.{nameof(Geocodio)}.Key[{options.Key}]";

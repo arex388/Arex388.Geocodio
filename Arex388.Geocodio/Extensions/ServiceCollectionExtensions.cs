@@ -28,9 +28,7 @@ public static class ServiceCollectionExtensions {
 		this IServiceCollection services,
 		GeocodioClientOptions options) {
 		services.AddHttpClient<IGeocodioClient>(
-			hc => {
-				hc.BaseAddress = HttpClientHelper.BaseAddress;
-			});
+			hc => hc.BaseAddress = HttpClientHelper.BaseAddress);
 
 		return services.AddValidatorsFromAssemblyContaining<IGeocodioClient>(includeInternalTypes: true, lifetime: ServiceLifetime.Singleton)
 					   .AddSingleton(options)

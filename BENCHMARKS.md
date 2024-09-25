@@ -12,14 +12,14 @@
 
 ###### Geocode
 
-| Method   |     Mean |   Error |   StdDev | Allocated |
-| -------- | -------: | ------: | -------: | --------: |
-| Multiple | 483.7 ms | 3.64 ms |  5.23 ms |  36.88 KB |
-| Single   | 488.9 ms | 9.21 ms | 11.31 ms |  27.43 KB |
+| Method   |     Mean | Allocated |
+| -------- | -------: | --------: |
+| Multiple | 483.7 ms |  36.88 KB |
+| Single   | 488.9 ms |  27.43 KB |
 
 ###### Reverse Geocode
 
-| Method   |     Mean |   Error |   StdDev | Allocated |
-| -------- | -------: | ------: | -------: | --------: |
-| Multiple | 489.3 ms | 9.75 ms | 15.18 ms |  34.78 KB |
-| Single   | 489.7 ms | 7.61 ms |  8.77 ms |  26.58 KB |
+| Method   |     Mean | Allocated |
+| -------- | -------: | --------: |
+| Multiple | 489.3 ms |  34.78 KB |
+| Single   | 489.7 ms |  26.58 KB |

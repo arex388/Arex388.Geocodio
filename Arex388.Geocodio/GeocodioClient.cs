@@ -37,7 +37,6 @@ internal sealed class GeocodioClient(
 	private readonly IValidator<ReverseGeocodeMany.Request> _reverseGeocodeBatchValidator = services.GetRequiredService<IValidator<ReverseGeocodeMany.Request>>();
 	private readonly IValidator<ReverseGeocode.Request> _reverseGeocodeValidator = services.GetRequiredService<IValidator<ReverseGeocode.Request>>();
 
-	/// <inheritdoc />
 	public Task<Geocode.Response> GeocodeAsync(
 		string address,
 		bool mostAccurate = true,
@@ -48,7 +47,6 @@ internal sealed class GeocodioClient(
 				: null
 		}, cancellationToken);
 
-	/// <inheritdoc />
 	public async Task<Geocode.Response> GeocodeAsync(
 		Geocode.Request request,
 		CancellationToken cancellationToken = default) {
@@ -77,7 +75,6 @@ internal sealed class GeocodioClient(
 		}
 	}
 
-	/// <inheritdoc />
 	public Task<GeocodeMany.Response> GeocodeManyAsync(
 		IList<string> addresses,
 		bool mostAccurate = true,
@@ -88,7 +85,6 @@ internal sealed class GeocodioClient(
 				: null
 		}, cancellationToken);
 
-	/// <inheritdoc />
 	public async Task<GeocodeMany.Response> GeocodeManyAsync(
 		GeocodeMany.Request request,
 		CancellationToken cancellationToken = default) {
@@ -117,7 +113,6 @@ internal sealed class GeocodioClient(
 		}
 	}
 
-	/// <inheritdoc />
 	public Task<ReverseGeocode.Response> ReverseGeocodeAsync(
 		decimal latitude,
 		decimal longitude,
@@ -129,7 +124,6 @@ internal sealed class GeocodioClient(
 				: null
 		}, cancellationToken);
 
-	/// <inheritdoc />
 	public Task<ReverseGeocode.Response> ReverseGeocodeAsync(
 		string point,
 		bool mostAccurate = true,
@@ -140,7 +134,6 @@ internal sealed class GeocodioClient(
 				: null
 		}, cancellationToken);
 
-	/// <inheritdoc />
 	public async Task<ReverseGeocode.Response> ReverseGeocodeAsync(
 		ReverseGeocode.Request request,
 		CancellationToken cancellationToken = default) {
@@ -169,7 +162,6 @@ internal sealed class GeocodioClient(
 		}
 	}
 
-	/// <inheritdoc />
 	public Task<ReverseGeocodeMany.Response> ReverseGeocodeManyAsync(
 		IList<string> points,
 		bool mostAccurate = true,
@@ -180,7 +172,6 @@ internal sealed class GeocodioClient(
 				: null
 		}, cancellationToken);
 
-	/// <inheritdoc />
 	public async Task<ReverseGeocodeMany.Response> ReverseGeocodeManyAsync(
 		ReverseGeocodeMany.Request request,
 		CancellationToken cancellationToken = default) {
