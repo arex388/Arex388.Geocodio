@@ -1,4 +1,10 @@
-# CHANGELOG
+# Changelog
+
+#### 2.0.3 (2024-10-02)
+
+- Minor optimizations.
+
+
 
 #### 2.0.2 (2024-09-25)
 

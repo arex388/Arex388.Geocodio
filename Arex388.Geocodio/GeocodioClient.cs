@@ -37,6 +37,8 @@ internal sealed class GeocodioClient(
 	private readonly IValidator<ReverseGeocodeMany.Request> _reverseGeocodeBatchValidator = services.GetRequiredService<IValidator<ReverseGeocodeMany.Request>>();
 	private readonly IValidator<ReverseGeocode.Request> _reverseGeocodeValidator = services.GetRequiredService<IValidator<ReverseGeocode.Request>>();
 
+	public Guid Id { get; } = Guid.NewGuid();
+
 	public Task<Geocode.Response> GeocodeAsync(
 		string address,
 		bool mostAccurate = true,
@@ -67,7 +69,7 @@ internal sealed class GeocodioClient(
 
 			geocode!.Errors = geocode.Error.HasValue()
 				? [geocode.Error!]
-				: [];
+				: geocode.Errors;
 
 			return geocode;
 		} catch {
@@ -105,7 +107,7 @@ internal sealed class GeocodioClient(
 
 			geocodes!.Errors = geocodes.Error.HasValue()
 				? [geocodes.Error!]
-				: [];
+				: geocodes.Errors;
 
 			return geocodes;
 		} catch {
@@ -154,7 +156,7 @@ internal sealed class GeocodioClient(
 
 			reverseGeocode!.Errors = reverseGeocode.Error.HasValue()
 				? [reverseGeocode.Error!]
-				: [];
+				: reverseGeocode.Errors;
 
 			return reverseGeocode;
 		} catch {
@@ -192,7 +194,7 @@ internal sealed class GeocodioClient(
 
 			reverseGeocodes!.Errors = reverseGeocodes.Error.HasValue()
 				? [reverseGeocodes.Error!]
-				: [];
+				: reverseGeocodes.Errors;
 
 			return reverseGeocodes;
 		} catch {

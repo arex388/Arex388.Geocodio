@@ -56,7 +56,7 @@ public sealed class GeocodioClientFactoryTests {
 			Key = Config.Key
 		});
 		var client2 = _geocodioFactory.CreateClient(new GeocodioClientOptions {
-			Key = "asdf"
+			Key = string.Empty
 		});
 
 		_console.WriteLineWithHeader(nameof(client1), client1);

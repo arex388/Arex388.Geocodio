@@ -8,12 +8,14 @@
 </Query>
 
 private static readonly GeocodioClientOptions _options = new GeocodioClientOptions {
-	Key = Util.GetPassword("")
+	Key = Util.GetPassword("geocodiokey")
 };
 
 async Task Main() {
 	//var geocodio = GetClientMultiple();
 	var geocodio = GetClientSingle();
+	
+	(await geocodio.GeocodeAsync("4022 W Camino del Rio, Glendale, AZ 85310").ConfigureAwait(false)).Dump();
 }
 
 public IGeocodioClient GetClientMultiple() {
