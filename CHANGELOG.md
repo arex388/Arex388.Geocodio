@@ -1,5 +1,11 @@
 # Changelog
 
+#### 2.0.4 (2024-10-13)
+
+- **Updated:** NuGet packages.
+
+
+
 #### 2.0.3 (2024-10-02)
 
 - Minor optimizations.
