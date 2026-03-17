@@ -22,9 +22,15 @@ public sealed class AddressComponents {
 	public string Country { get; init; } = null!;
 
 	/// <summary>
-	/// The property number.
+	/// Formatted street (combination of the predirectional, prefix, street, suffix, and postdirectional).
 	/// </summary>
-	public string Number { get; init; } = null!;
+	[JsonPropertyName("formatted_street")]
+	public string? FormattedStreet { get; init; }
+
+    /// <summary>
+    /// The property number.
+    /// </summary>
+    public string Number { get; init; } = null!;
 
 	/// <summary>
 	/// The postal code.
@@ -47,10 +53,22 @@ public sealed class AddressComponents {
 	/// </summary>
 	public string? Prefix { get; init; }
 
-	/// <summary>
-	/// The state.
-	/// </summary>
-	public string State { get; init; } = null!;
+    /// <summary>
+    /// The secondary unit (i.e. an apartment or suite).
+    /// </summary>
+	[JsonPropertyName("secondaryunit")]
+    public string? SecondaryUnit { get; init; }
+
+    /// <summary>
+    /// The number of the secondary unit.
+    /// </summary>
+	[JsonPropertyName("secondarynumber")]
+    public string? SecondaryNumber { get; init; }
+
+    /// <summary>
+    /// The state.
+    /// </summary>
+    public string State { get; init; } = null!;
 
 	/// <summary>
 	/// The street.
